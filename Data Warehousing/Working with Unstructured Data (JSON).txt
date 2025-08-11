@@ -1,0 +1,42 @@
+//Selecting database to work with
+USE DATABASE MANAGE_DB;
+
+//Creating table to load unstructured data into, using variant to handle raw data type
+CREATE OR REPLACE TABLE PUBLIC.JSON_RAW(
+RAW VARIANT
+)
+//Creating schema to house stage and file format of JSON
+CREATE OR REPLACE SCHEMA EXTERNAL_STAGES;
+
+CREATE OR REPLACE STAGE EXTERNAL_STAGES.JSONSTAGE
+    url='s3://snowflake-assignments-mc/unstructureddata/';
+
+CREATE OR REPLACE file format JSONFORMAT
+    TYPE = JSON;
+//Loading JSON file into Table
+COPY INTO JSON_RAW
+    FROM @JSONSTAGE
+    file_format= JSONFORMAT;
+
+//Affirming copied data
+SELECT * FROM JSON_RAW;
+
+//Handling and querying unstructured data as well as returning values within arrays
+SELECT 
+$1:first_name::STRING,
+$1:last_name::STRING,
+$1:Skills[0]::STRING,
+$1:Skills[1]::STRING
+FROM JSON_RAW;
+
+//Copying data into a new table with SQL to clean and prep for further querying
+CREATE  OR REPLACE TABLE SKILLS AS
+SELECT 
+$1:first_name::STRING AS first_name,
+$1:last_name::STRING AS last_name,
+$1:Skills[0]::STRING AS Skill_1,
+$1:Skills[1]::STRING AS Skill_2
+FROM JSON_RAW;
+
+//Affirming transfer of data into Skills table
+SELECT * FROM SKILLS;

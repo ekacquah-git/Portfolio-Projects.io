@@ -1,0 +1,66 @@
+USE DATABASE DEMO_DB;
+
+CREATE OR REPLACE TABLE CUSTOMERS(
+id number,
+full_name varchar,
+email varchar,
+phone varchar,
+spent number,
+create_date DATE DEFAULT CURRENT_DATE
+);
+
+INSERT INTO CUSTOMERS (id, full_name, email, phone, spent)
+values
+ (1,'Lewiss MacDwyer','lmacdwyer0@un.org','262-665-9168',140),
+  (2,'Ty Pettingall','tpettingall1@mayoclinic.com','734-987-7120',254),
+  (3,'Marlee Spadazzi','mspadazzi2@txnews.com','867-946-3659',120),
+  (4,'Heywood Tearney','htearney3@patch.com','563-853-8192',1230),
+  (5,'Odilia Seti','oseti4@globo.com','730-451-8637',143),
+  (6,'Meggie Washtell','mwashtell5@rediff.com','568-896-6138',600);
+
+
+  CREATE OR REPLACE ROLE ANALYST_MASKED;
+  CREATE OR REPLATE ROLE ANALYST_FULL;
+
+  GRANT SELECT ON TABLE DEMO_DB.PUBLIC.CUSTOMERS TO ROLE ANALYST_MASKED;
+  GRANT SELECT ON TABLE DEMO_DB.PUBLIC.CUSTOMERS TO ROLE ANALYST_FULL;
+
+  GRANT SELECT ON SCHEMA DEMO_DB.PUBLIC TO ROLE ANALYST_MASKED;
+  GRANT SELECT ON SCHEMA DEMO_DB.PUBLIC TO ROLE ANALYST_FULL;
+
+  GRANT USAGE ON WAREHOUSE COMPUTE_WH TO ROLE ANALYST_MASKED;
+  GRANT USAGE ON WAREHOUSE COMPUTE_WH TO ROLE ANALYST_FULL;
+
+  GRANT SELECT ON TABLE DEMO_DB.PUBLIC.CUSTOMERS TO ROLE ANALYST_MASKED;
+  GRANT SELECT ON TABLE DEMO_DB.PUBLIC.CUSTOMERS TO ROLE ANALYST_FULL;
+
+  GRANT ROLE ANALYST_MASKED TO USER EKACQUAH;
+  GRANT ROLE ANALYST_FULL TO USER EKACQUAH;
+
+  create or replace masking policy name 
+    as (val varchar) returns varchar ->
+            case        
+            when current_role() in ('ANALYST_FULL', 'ACCOUNTADMIN') then val
+            else '***'
+            end;
+
+ALTER TABLE CUSTOMERS MODIFY COLUMN full_name
+SET masking policy name;
+
+USE ROLE ACCOUNTADMIN;
+ALTER TABLE CUSTOMERS MODIFY COLUMN full_name
+UNSET masking policy;   
+
+USE ROLE ANALYST_FULL;
+USE ROLE ANALYST_MASKED;
+
+SELECT * FROM CUSTOMERS;
+
+USE ROLE ACCOUNTADMIN
+ALTER MASKING POLICY NAME SET BODY ->
+    case        
+    when current_role() in ('ANALYST_FULL', 'ACCOUNTADMIN') then val
+    else CONCAT('***',RIGHT(val,2))
+    end;
+
+

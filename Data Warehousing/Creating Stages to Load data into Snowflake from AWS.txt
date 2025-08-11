@@ -1,0 +1,23 @@
+CREATE OR REPLACE DATABASE CUSTOMERS_DB;
+
+//Creating Stage in Customers Database within an External_stages SCHEMA
+
+CREATE OR REPLACE SCHEMA EXTERNAL_STAGES;
+
+CREATE OR REPLACE STAGE CUSTOMERS_DB.external_stages.aws_stage
+    url='s3://snowflake-assignments-mc/loadingdata'
+//Creating and Loading data into customers table from AWS cloud
+CREATE OR REPLACE TABLE CUSTOMERS_DB.PUBLIC.CUSTOMERS(
+ customer_id int,
+  first_name varchar,
+  last_name varchar,
+  email varchar,
+  age int,
+  city varchar);
+
+  //Copying data from stage into Customers table from AWS
+
+COPY INTO CUSTOMERS_DB.PUBLIC.CUSTOMERS
+    FROM @aws_stage
+    file_format= (type = csv field_delimiter=';' skip_header=1);
+  
