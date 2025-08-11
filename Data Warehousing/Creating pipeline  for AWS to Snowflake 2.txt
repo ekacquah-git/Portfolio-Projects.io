@@ -1,0 +1,52 @@
+//Create pipeline from AWS S3 bucket
+
+CREATE OR REPLACE TABLE MANAGE_DB.PUBLIC.employees (
+  id INT,
+  first_name STRING,
+  last_name STRING,
+  email STRING,
+  location STRING,
+  department STRING
+  )
+    
+CREATE OR REPLACE file format MANAGE_DB.file_formats.csv_fileformat
+    type = csv
+    field_delimiter = ','
+    skip_header = 1
+    null_if = ('NULL','null')
+    empty_field_as_null = TRUE;
+    
+//Created Stage object to link files from bucket
+CREATE OR REPLACE stage MANAGE_DB.external_stages.csv_folder
+    URL = 's3://snowflakes3bucket-portfolioexea/csv/snowpipe/'
+    STORAGE_INTEGRATION = s3_int
+    FILE_FORMAT = MANAGE_DB.file_formats.csv_fileformat
+   
+ // Create stage object with integration object & file format object
+LIST @MANAGE_DB.external_stages.csv_folder  
+
+
+// Create Schema to hold pipeline
+CREATE OR REPLACE SCHEMA MANAGE_DB.pipes
+
+// Define pipeline: what gets loaded and into which table
+CREATE OR REPLACE pipe MANAGE_DB.pipes.employee_pipe
+auto_ingest = TRUE
+AS
+COPY INTO MANAGE_DB.PUBLIC.employees
+FROM @MANAGE_DB.external_stages.csv_folder  
+
+// Affirming existence of pipeline
+DESC pipe employee_pipe
+    
+SELECT * FROM MANAGE_DB.PUBLIC.employees;
+
+//Pipeline exists, set up a create events trigger to load upon new file upload. Selecting rows to confirm new additional rows. 100-->200
+SELECT COUNT(*) FROM MANAGE_DB.PUBLIC.employees;
+
+//Pausing the pipeline
+// Pause pipe
+ALTER PIPE MANAGE_DB.pipes.employee_pipe SET PIPE_EXECUTION_PAUSED = true;
+
+// Resume pipe
+ALTER PIPE MANAGE_DB.pipes.employee_pipe SET PIPE_EXECUTION_PAUSED = false;
