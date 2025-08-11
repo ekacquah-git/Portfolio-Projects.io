@@ -1,0 +1,67 @@
+CREATE TABLE coviddeaths(
+code TEXT,
+continent TEXT,
+country TEXT ,
+date DATE,
+population NUMERIC,
+total_cases NUMERIC,
+new_cases NUMERIC,
+new_cases_smoothed NUMERIC,
+total_cases_per_million NUMERIC,
+new_cases_per_million NUMERIC,
+new_cases_smoothed_per_million NUMERIC,
+total_deaths NUMERIC,
+new_deaths NUMERIC,
+new_deaths_smoothed NUMERIC,
+total_deaths_per_million NUMERIC,
+new_deaths_per_million NUMERIC,
+new_deaths_smoothed_per_million NUMERIC,
+excess_mortality NUMERIC,
+excess_mortality_cumulative NUMERIC,
+excess_mortality_cumulative_absolute NUMERIC,
+excess_mortality_cumulative_per_million NUMERIC,
+hosp_patients NUMERIC,
+hosp_patients_per_million NUMERIC,
+weekly_hosp_admissions NUMERIC,
+weekly_hosp_admissions_per_million NUMERIC);
+
+DROP TABLE coviddeaths;
+DROP TABLE covidvaccinations;
+
+
+CREATE TABLE covidvaccinations(
+code TEXT,
+continent TEXT,
+country TEXT,
+date DATE,
+population BIGINT,
+new_tests BIGINT,
+total_tests_per_thousand NUMERIC,
+new_tests_per_thousand NUMERIC,
+new_tests_smoothed BIGINT,
+new_tests_smoothed_per_thousand NUMERIC,
+positive_rate NUMERIC,
+tests_per_case NUMERIC,
+total_vaccinations NUMERIC,
+people_vaccinated NUMERIC,
+people_fully_vaccinated NUMERIC,
+total_boosters NUMERIC,
+new_vaccinations NUMERIC,
+new_vaccinations_smoothed NUMERIC,
+total_vaccinations_per_hundred NUMERIC,
+people_vaccinated_per_hundred NUMERIC,
+people_fully_vaccinated_per_hundred NUMERIC,
+total_boosters_per_hundred NUMERIC,
+new_vaccinations_smoothed_per_million NUMERIC,
+new_people_vaccinated_smoothed NUMERIC,
+new_people_vaccinated_smoothed_per_hundred NUMERIC,
+population_density NUMERIC, 
+median_age NUMERIC,
+gdp_per_capita NUMERIC,
+extreme_poverty NUMERIC,
+diabetes_prevalence NUMERIC,
+handwashing_facilities NUMERIC,
+hospital_beds_per_thousand NUMERIC);
+
+DELETE FROM coviddeaths
+WHERE total_cases =0;
