@@ -1,12 +1,8 @@
 <!DOCTYPE HTML>
-<!--
-	Massively by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
+
 <html>
 	<head>
-		<title>Generic Page - Massively by HTML5 UP</title>
+		<title>Data Wrangling </title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
@@ -19,21 +15,19 @@
 
 				<!-- Header -->
 					<header id="header">
-						<a href="index.html" class="logo">Massively</a>
+						<a href="generic.html" class="logo">Data Wrangling</a>
 					</header>
 
 				<!-- Nav -->
 					<nav id="nav">
 						<ul class="links">
-							<li><a href="index.html">This is Massively</a></li>
-							<li class="active"><a href="generic.html">Generic Page</a></li>
-							<li><a href="elements.html">Elements Reference</a></li>
+							<li><a href="index.html">Projects</a></li>
+							<li class="active"><a href="generic.html">Data Wrangling</a></li>
+							<li><a href="generic2.html">Data Warehouse</a></li>
 						</ul>
 						<ul class="icons">
-							<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-							<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
-							<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
-							<li><a href="#" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+							<li><a href="https://www.linkedin.com/in/eddy-acquah-472b0a279" class="icon brands alt fa-linkedin"><span class="label">linkedin</span></a></li>
+							<li><a href="#" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
 						</ul>
 					</nav>
 
@@ -42,64 +36,94 @@
 
 						<!-- Post -->
 							<section class="post">
-								<header class="major">
-									<span class="date">April 25, 2017</span>
-									<h1>This is a<br />
-									Generic Page</h1>
-									<p>Aenean ornare velit lacus varius enim ullamcorper proin aliquam<br />
-									facilisis ante sed etiam magna interdum congue. Lorem ipsum dolor<br />
-									amet nullam sed etiam veroeros.</p>
-								</header>
-								<div class="image main"><img src="images/pic01.jpg" alt="" /></div>
-								<p>Donec eget ex magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fergiat. Pellentesque in mi eu massa lacinia malesuada et a elit. Donec urna ex, lacinia in purus ac, pretium pulvinar mauris. Nunc lorem mauris, fringilla in aliquam at, euismod in lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Curabitur sapien risus, commodo eget turpis at, elementum convallis enim turpis, lorem ipsum dolor sit amet nullam.</p>
-								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis dapibus rutrum facilisis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam tristique libero eu nibh porttitor fermentum. Nullam venenatis erat id vehicula viverra. Nunc ultrices eros ut ultricies condimentum. Mauris risus lacus, blandit sit amet venenatis non, bibendum vitae dolor. Nunc lorem mauris, fringilla in aliquam at, euismod in lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In non lorem sit amet elit placerat maximus. Pellentesque aliquam maximus risus. Donec eget ex magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum.</p>
+								<section id="cleaning-section">
+									<header class="major">
+										<h1>Data Cleaning</h1>
+										<p>Reliable Analysis Starts with Clean Data<br />
+										</p>
+									</header>
+									<p>PostgreSQL was the DBMS for wrangling the data below. Cleaning and transformations are the unsung heroes in driving the analysis performed.
+									</p>
+									<div class="image main"><img src="images/pexels-expect-best-79873-323780.jpg" alt="" /></div>
+									<p><strong>Goal:</strong> Data Readiness. Preparing the nashville dataset for analysis.</p>
+									<div class="image main"><img src="images/Querying Nashville Housing Data.jpg" alt="" /></div>
+									<ul>
+									
+										<li>An intial query shows a semi-structured dataset with some missing or inconsistent values </li>
+									
+									</ul>
+									<div class="image main"><img src="images/Nashville Housing Dataset correcting Nulls.jpg" alt="" /></div>
+									<ul>
+										<li>Duplicates are accounted for with Unique ID's per record.</li>
+									</ul>
+									<div class="image main"><img src="images/Nashville Housing Dataset transforming table, adding, splitting columns (1).PNG" alt="" /></div>
+									<ul>
+										<li>Address splits allow for readability and subsequent filtering.</li>
+									</ul>
+									<div class="image main"><img src="images/Updating inconsistent Nashville Housing Data.JPG" alt="" /></div>
+									<ul>
+										<li>Best practices need to be adhered. 
+											A View was created to delete row data to clean out duplicates rather than deleting raw data.</li>
+									</ul>
+									<strong>Key Insights:</strong>
+									<ul>
+										<li>Properties may have multiple owners. Important to keep in mind for analysis surrounding individuals. </li>
+									</ul>
+								</section>
+								<section id="transformation-section">
+									<header class="major">
+										<h1>Data Transformations<br /></h1>
+										<p>Analysis strenghtened through Transformation</p>
+									</header>
+								<div class="image main"><img src="images/pexels-edward-jenner-4031867.jpg" alt="" /></div>
+								<p><strong>Question:</strong> How has the impact of Covid progressed over the years?</p>
+									<div class="image main"><img src="images/Querying covid deaths.JPG" alt="" /></div>
+									<ul>
+										<li>Datasets recorded values by day, giving values for death counts and death totals.</li>
+									
+									</ul>
+									<div class="image main"><img src="images/Covid Global Numbers.JPG" alt="" /></div>
+									<ul>
+										<li>Cases, Deaths and resulting Mortality rates for reported cases as we progressed along the years.</li>
+									
+									</ul>
+									<div class="image main"><img src="images/Country infection rates.JPG" alt="" /></div>
+									<div class="image main"><img src="images/Continent and Country queries for Death Count.JPG" alt=""/></div>
+									<strong>Key Insights:</strong>
+									<ul>
+										<li>Aggregations summarized by places of interest helped visualize respective impacts.</li>
+									
+									</ul>
+									<ul class="actions special">
+										<li><a href="https://public.tableau.com/views/CovidAnalysis_17546826181140/Dashboard1?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link" class="button">View Visualization</a></li>
+									</ul>
+								
+								</section>
 							</section>
 
 					</div>
 
 				<!-- Footer -->
-					<footer id="footer">
-						<section>
-							<form method="post" action="#">
-								<div class="fields">
-									<div class="field">
-										<label for="name">Name</label>
-										<input type="text" name="name" id="name" />
-									</div>
-									<div class="field">
-										<label for="email">Email</label>
-										<input type="text" name="email" id="email" />
-									</div>
-									<div class="field">
-										<label for="message">Message</label>
-										<textarea name="message" id="message" rows="3"></textarea>
-									</div>
-								</div>
-								<ul class="actions">
-									<li><input type="submit" value="Send Message" /></li>
-								</ul>
-							</form>
-						</section>
+				<footer id="footer">	
 						<section class="split contact">
 							<section class="alt">
-								<h3>Address</h3>
-								<p>1234 Somewhere Road #87257<br />
-								Nashville, TN 00000-0000</p>
+								<h3>Location</h3>
+								<p>Queen Creek, AZ</p>
 							</section>
 							<section>
 								<h3>Phone</h3>
-								<p><a href="#">(000) 000-0000</a></p>
+								(480) 599-1967
+								<p> </p>
 							</section>
 							<section>
 								<h3>Email</h3>
-								<p><a href="#">info@untitled.tld</a></p>
+								ekacquah@gmail.com
+								<p> </p>
 							</section>
 							<section>
 								<h3>Social</h3>
 								<ul class="icons alt">
-									<li><a href="#" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
-									<li><a href="#" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
-									<li><a href="#" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
+									<li><a href="https://www.linkedin.com/in/eddy-acquah-472b0a279" class="icon brands alt fa-linkedin"><span class="label">linkedin</span></a></li>
 									<li><a href="#" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
 								</ul>
 							</section>
@@ -107,10 +131,7 @@
 					</footer>
 
 				<!-- Copyright -->
-					<div id="copyright">
-						<ul><li>&copy; Untitled</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li></ul>
-					</div>
-
+				
 			</div>
 
 		<!-- Scripts -->
