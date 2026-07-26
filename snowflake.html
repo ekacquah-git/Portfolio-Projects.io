@@ -1,0 +1,114 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Snowflake | Eddy Acquah Portfolio</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<div id="wrapper">
+
+			<header id="header">
+				<a href="index.html" class="logo">Snowflake</a>
+			</header>
+
+			<nav id="nav">
+				<ul class="links">
+					<li><a href="index.html">Home</a></li>
+					<li><a href="sql.html">SQL</a></li>
+					<li class="active"><a href="snowflake.html">Snowflake</a></li>
+					<li><a href="powerbi.html">Power BI</a></li>
+					<li><a href="tableau.html">Tableau</a></li>
+				</ul>
+				<ul class="icons">
+					<li><a href="https://www.linkedin.com/in/eddy-acquah-472b0a279" class="icon brands alt fa-linkedin"><span class="label">linkedin</span></a></li>
+					<li><a href="https://github.com/ekacquah-git/Portfolio-Projects.io" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+				</ul>
+			</nav>
+
+			<div id="main">
+				<section class="post">
+
+					<section id="axon-pipeline-section">
+						<header class="major">
+							<h1>Axon Manufacturing Pipeline</h1>
+							<p>Azure Blob Storage to Snowflake Bronze / Silver / Gold</p>
+						</header>
+						<p>Manufacturing environments generate data across disconnected systems. Supplier records, production logs, and equipment telemetry do not arrive in a format ready for analysis. I built a pipeline to normalize all of it into a single queryable layer.</p>
+						<div class="image main"><img src="images/cfa2af18-ecdf-4ba8-b85b-c113fbe6176c.jpg" alt="" /></div>
+						<p><strong>Architecture:</strong> Raw CSV files land in Azure Blob Storage and flow into a Bronze / Silver / Gold medallion architecture in Snowflake. Bronze holds source data exactly as received. Silver applies transformations: UNPIVOT for metric reshaping, LATERAL FLATTEN for JSON device telemetry, surrogate key generation for dimensional modeling. Gold delivers an analytics-ready supplier scorecard and quality trend layer.</p>
+						<p><strong>Key Output:</strong> A production-grade Snowflake warehouse covering supplier delivery performance, defect rates, and downtime contribution by vendor and period.</p>
+					</section>
+
+					<section id="compliance-model-section">
+						<header class="major">
+							<h1>Minimum Wage Compliance Model</h1>
+							<p>Azure Blob Storage to Snowflake to Power BI — Professional Build</p>
+						</header>
+						<p>The benefits in establishing data pipelines for real-time updates have been a must in my experience. Often times, it enabled proactive workforce management and continuous compliance monitoring.</p>
+						<p>Minimum wage law changes at the state and local level created ongoing exposure risk across multiple jurisdictions. I built a compliance model that tracked every active employee against applicable minimums by jurisdiction, including city-level overrides for California. Raw payroll data landed from Azure Blob Storage into Bronze, moved through transformation in Silver, and materialized in Gold for Power BI reporting.</p>
+						<p><strong>Architecture:</strong> Bronze held raw CSV exactly as received, intentional data quality issues included. Silver applied TRY_TO_DOUBLE to strip dollar-sign and comma formatting, CASE statements to normalize job class variants, and a UNPIVOT via UNION ALL converting three rate period columns per jurisdiction into one row per period. Remote employees were resolved to work state via COALESCE. A 5% buffer flagged At Risk employees before breach, not after.</p>
+						<p><strong>Gold layer:</strong> Two materialized mart tables. MART_COMPLIANCE_CURRENT gave one row per active employee with compliance status and annualized exposure. MART_COMPLIANCE_UPCOMING gave forward-looking rows per employee per upcoming rate period. Power BI connected to Gold only.</p>
+						<p><strong>Key Output:</strong> A monthly compliance dashboard surfacing exposure by jurisdiction, title, and employee — with enough lead time to act before effective dates hit.</p>
+					</section>
+
+					<section id="snowpipe-section">
+						<header class="major">
+							<h1>Snowpipe with AWS S3</h1>
+							<p>Automated Pipeline Ingestion from AWS S3 to Snowflake</p>
+						</header>
+						<p>I built and implemented a data pipeline that integrated AWS S3 with Snowflake to detect file uploads and process both structured and unstructured data for real-time warehouse updates.</p>
+						<div class="image main"><img src="images/cfa2af18-ecdf-4ba8-b85b-c113fbe6176c.jpg" alt="" /></div>
+						<p><strong>Goal:</strong> Automating updates with additions to the dataset.</p>
+						<div class="image main"><img src="images/AWS S3 bucket configuration.JPG" alt="" /></div>
+						<p>AWS S3 Buckets and IAM provided the storage and secure connection. Data objects were built in Snowflake to receive and stage data uploads.</p>
+						<div class="image main"><img src="images/Snowpipe buildout.JPG" alt="" /></div>
+						<p>These objects include databases, schemas, and tables as the endpoints.</p>
+						<div class="image main"><img src="images/Confirming pipeline build and Ability to stop.JPG" alt="" /></div>
+						<p>The pipeline streamed updates in the event of new uploads, creating a real-time feed for newly generated records. A similar setup provisioned continuous monitoring of workforce wages and data integrity within our HCM.</p>
+					</section>
+
+				</section>
+			</div>
+
+			<footer id="footer">
+				<section class="split contact">
+					<section class="alt">
+						<h3>Location</h3>
+						<p>Queen Creek, AZ</p>
+					</section>
+					<section>
+						<h3>Phone</h3>
+						(480) 599-1967
+						<p> </p>
+					</section>
+					<section>
+						<h3>Email</h3>
+						ekacquah@gmail.com
+						<p> </p>
+					</section>
+					<section>
+						<h3>Social</h3>
+						<ul class="icons alt">
+							<li><a href="https://www.linkedin.com/in/eddy-acquah-472b0a279" class="icon brands alt fa-linkedin"><span class="label">linkedin</span></a></li>
+							<li><a href="https://github.com/ekacquah-git/Portfolio-Projects.io" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+						</ul>
+					</section>
+				</section>
+			</footer>
+
+		</div>
+
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/jquery.scrollex.min.js"></script>
+		<script src="assets/js/jquery.scrolly.min.js"></script>
+		<script src="assets/js/browser.min.js"></script>
+		<script src="assets/js/breakpoints.min.js"></script>
+		<script src="assets/js/util.js"></script>
+		<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
