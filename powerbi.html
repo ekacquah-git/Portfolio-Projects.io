@@ -1,0 +1,177 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Power BI | Eddy Acquah Portfolio</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<div id="wrapper">
+
+			<header id="header">
+				<a href="index.html" class="logo">Power BI</a>
+			</header>
+
+			<nav id="nav">
+				<ul class="links">
+					<li><a href="index.html">Home</a></li>
+					<li><a href="sql.html">SQL</a></li>
+					<li><a href="snowflake.html">Snowflake</a></li>
+					<li class="active"><a href="powerbi.html">Power BI</a></li>
+					<li><a href="tableau.html">Tableau</a></li>
+				</ul>
+				<ul class="icons">
+					<li><a href="https://www.linkedin.com/in/eddy-acquah-472b0a279" class="icon brands alt fa-linkedin"><span class="label">linkedin</span></a></li>
+					<li><a href="https://github.com/ekacquah-git/Portfolio-Projects.io" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+				</ul>
+			</nav>
+
+			<div id="main">
+				<section class="post">
+
+					<header class="major">
+						<h1>Power BI Projects</h1>
+						<p>Nine projects across Retail, FP&amp;A, Supply Chain, Manufacturing, and Workforce Analytics</p>
+					</header>
+
+					<!-- RETAIL -->
+
+					<section id="adventureworks-section">
+						<header class="major">
+							<h2>Adventure Works Sales &amp; Customer Analytics</h2>
+							<p>[Retail]</p>
+						</header>
+						<div class="image main"><img src="images/adventureworks-screenshot.png" alt="Adventure Works Power BI Dashboard" /></div>
+						<p>End-to-end Power BI build on the Adventure Works retail dataset. Built progressively through five stages: Power Query cleaning, data model construction, DAX measure development, visualization, and AI-assisted insight using Key Influencers and Decomposition Tree.</p>
+						<p>Star schema across 2020-2022 sales transactions, customer, product, territory, returns, and calendar dimensions. Key metrics cover revenue, profit, and order volume by period and territory, customer segmentation by revenue contribution, return rates, and year-over-year growth trends.</p>
+					</section>
+
+					<section id="mavenmarket-section">
+						<header class="major">
+							<h2>Maven Market Retail Analytics</h2>
+							<p>[Retail]</p>
+						</header>
+						<div class="image main"><img src="images/maven-market-screenshot.png" alt="Maven Market Power BI Dashboard" /></div>
+						<p>Full Power BI build on the Maven Market grocery retail dataset covering two years of transaction data (1997-1998). Star schema connecting two separate fact tables to store, product, customer, regional, returns, and calendar dimensions.</p>
+						<p>Key metrics: sales volume and revenue by store, region, and product. Customer purchase behavior and loyalty metrics. Return rates by product category. Year-over-year comparison across 1997 and 1998. Store-level performance ranking.</p>
+					</section>
+
+					<!-- FP&A -->
+
+					<section id="fpa-section">
+						<header class="major">
+							<h2>FP&amp;A Analytics &mdash; Budget vs. Actuals &amp; P&amp;L Reporting</h2>
+							<p>[FP&amp;A]</p>
+						</header>
+						<div class="image main"><img src="images/fpa-screenshot.png" alt="FP&A Power BI Dashboard" /></div>
+						<p>Power BI solution supporting monthly business reviews, budget accountability, and full-year forecasting across three fiscal years. Budget and actuals are kept as separate fact tables because they have different granularity and different refresh cadences.</p>
+						<p>A P&amp;L sort order calculated column on the accounts dimension enforces income statement sequence across all visuals. Three report pages: Executive P&amp;L Dashboard with budget vs. actual variance, Department Budget Tracking with drill-through, and Forecast and Trend Analysis with full-year projection built from actuals to date plus remaining budget.</p>
+					</section>
+
+					<!-- SUPPLY CHAIN -->
+
+					<section id="supply-chain-1-section">
+						<header class="major">
+							<h2>Supply Chain Analytics &mdash; Fulfillment Performance</h2>
+							<p>[Supply Chain]</p>
+						</header>
+						<div class="image main"><img src="images/supply-chain-1-screenshot.png" alt="Supply Chain Fulfillment Power BI Dashboard" /></div>
+						<p>Logistics and fulfillment analytics covering shipment tracking, freight cost analysis, on-time delivery performance, and carrier benchmarking. Star schema with two fact tables: fact_shipments (5,000 rows) and fact_orders (5,060 rows), plus four dimension tables. Date table built in Power Query covering 2023-2025 and marked for time intelligence.</p>
+						<p>Data quality work included removing duplicate order line IDs, excluding negative freight costs, flagging fulfillment anomalies, and documenting orphaned foreign keys. Computed columns added: delivery days, on-time flag, and freight cost per unit. Three report pages covering executive KPIs, freight cost by carrier and lane, and delivery performance with drill-through.</p>
+					</section>
+
+					<section id="supply-chain-2-section">
+						<header class="major">
+							<h2>Supply Chain Analytics &mdash; Salesforce Vendor Performance</h2>
+							<p>[Supply Chain]</p>
+						</header>
+						<div class="image main"><img src="images/supply-chain-2-screenshot.png" alt="Supply Chain Salesforce Power BI Dashboard" /></div>
+						<p>Vendor performance dashboard built from Salesforce CRM data exports. Four source CSVs: PO line items, vendor master, supply disruption cases, and products. Models the kind of analytics a Business Systems Analyst builds when Salesforce is the operational data source.</p>
+						<p>The key metric is the case-to-PO ratio, a risk signal showing which vendors generate the most supply disruption cases relative to their purchase order volume. Data quality work included deduplication, negative unit cost flagging, quantity anomaly documentation, and vendor ID casing standardization for reliable joins.</p>
+					</section>
+
+					<!-- MANUFACTURING -->
+
+					<section id="axon-ops-section">
+						<header class="major">
+							<h2>Axon Operations Analytics Platform</h2>
+							<p>[Manufacturing]</p>
+						</header>
+						<div class="image main"><img src="images/cfa2af18-ecdf-4ba8-b85b-c113fbe6176c.jpg" alt="" /></div>
+						<p>Production-grade analytics platform for an operations team covering quality control and supply chain performance. Three-schema medallion architecture in PostgreSQL: raw (landing zone only), core (cleaned views equivalent to dbt models), and mart (pre-aggregated tables that Power BI connects to directly).</p>
+						<p>Data quality profiling ran before any transformation: duplicates, nulls, mixed values, and orphaned foreign keys all documented and triaged. Window functions and CTEs handled cross-domain joins. The headline finding: late-arriving deliveries from Tier 2 suppliers correlated with higher defect rates on downstream production lines.</p>
+					</section>
+
+					<!-- WORKFORCE -->
+
+					<section id="ta-dashboard-section">
+						<header class="major">
+							<h2>TA Conversion Report Investigation</h2>
+							<p>[Workforce]</p>
+						</header>
+						<p>The Talent Acquisition dashboard started showing conversion rate drops that did not match what the recruiting team was experiencing on the ground. I traced the discrepancy back through the data pipeline and identified a sourcing categorization issue that was misattributing candidates, skewing funnel metrics across the board.</p>
+						<p>After the fix, I rebuilt the dashboard with Power BI's native Key Insights AI feature, which automatically surfaces statistically notable changes in conversion rates, volume, and funnel drop-off each week. The weekly VP review shifted from reviewing numbers to making decisions.</p>
+					</section>
+
+					<section id="turnover-scorecard-section">
+						<header class="major">
+							<h2>School Turnover Scorecard</h2>
+							<p>[Workforce]</p>
+						</header>
+						<p>Staff turnover across a large school network was being tracked at the aggregate level, which made it easy to miss site-level problems until they were already critical. I built a scorecard that surfaced turnover rates, tenure distributions, and exit patterns at the individual school level, rolling up to region and network views.</p>
+						<p>School leaders got a monthly snapshot of where they stood relative to the network. HR could identify which sites needed attention before the situation worsened. Aggregate numbers were masking location-specific problems that required different interventions.</p>
+					</section>
+
+					<section id="bonus-allocation-section">
+						<header class="major">
+							<h2>Bonus Allocation Model</h2>
+							<p>[Workforce]</p>
+						</header>
+						<p>Discretionary bonus allocations across a large employee population had no consistent structure behind them. I built a model that applied objective criteria to the process, factoring in performance metrics, tenure, and role classification, and surfaced the results in a Power BI report that managers could review and adjust within defined parameters.</p>
+						<p>What had been a manually driven process became something auditable and repeatable. Allocation decisions were no longer difficult to defend if questioned. Leadership had visibility into distribution patterns across departments and locations.</p>
+					</section>
+
+				</section>
+			</div>
+
+			<footer id="footer">
+				<section class="split contact">
+					<section class="alt">
+						<h3>Location</h3>
+						<p>Queen Creek, AZ</p>
+					</section>
+					<section>
+						<h3>Phone</h3>
+						(480) 599-1967
+						<p> </p>
+					</section>
+					<section>
+						<h3>Email</h3>
+						ekacquah@gmail.com
+						<p> </p>
+					</section>
+					<section>
+						<h3>Social</h3>
+						<ul class="icons alt">
+							<li><a href="https://www.linkedin.com/in/eddy-acquah-472b0a279" class="icon brands alt fa-linkedin"><span class="label">linkedin</span></a></li>
+							<li><a href="https://github.com/ekacquah-git/Portfolio-Projects.io" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+						</ul>
+					</section>
+				</section>
+			</footer>
+
+		</div>
+
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/jquery.scrollex.min.js"></script>
+		<script src="assets/js/jquery.scrolly.min.js"></script>
+		<script src="assets/js/browser.min.js"></script>
+		<script src="assets/js/breakpoints.min.js"></script>
+		<script src="assets/js/util.js"></script>
+		<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
