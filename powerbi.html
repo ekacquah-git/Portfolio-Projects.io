@@ -70,7 +70,13 @@
 					<section id="operations-analytics-section">
 						<h2>Operations Analytics Platform</h2>
 						<p>Operations teams usually track quality and supply chain separately, which makes it hard to see how one affects the other. I built this platform to put both in the same place. It runs on a three-schema setup in PostgreSQL: raw holds the landing zone, core holds the cleaned views, and mart holds the pre-aggregated tables that Power BI actually connects to.</p>
-						<p>I profiled the data before transforming any of it. Duplicates, nulls, mixed values, and orphaned foreign keys all got documented and triaged first, because finding those later means rebuilding. The interesting part came out of joining the two domains: late deliveries from Tier 2 suppliers lined up with higher defect rates on the production lines downstream. That connection stays invisible if you keep the data in separate reports.</p>
+						<div class="image main"><img src="images/ops-quality-dashboard.png" alt="Quality dashboard showing first pass yield by product line, defect counts, and escaped defect rate" /></div>
+						<p>The quality view. First pass yield lands at 79.4% against an 85% target, and the escaped defect rate at 6.3% sits above the 5% threshold. Breaking yield out by product line is what makes the number actionable: Drone at 67.6% and Fixed at 70.6% are dragging the overall figure down, while CEW at 83.7% is close to target. An aggregate of 79.4% tells you there is a problem. The breakdown tells you where it lives.</p>
+
+						<div class="image main"><img src="images/ops-supply-chain-dashboard.png" alt="Supply chain dashboard showing on-time delivery rate by supplier and tier with lead time variance" /></div>
+						<p>The supply chain view. On-time delivery at 63.0% across 19 active suppliers, with average lead time running two days past standard. Ranking by supplier and grouping by tier surfaces which relationships are carrying the delay rather than leaving it as one blended rate.</p>
+
+						<p>I profiled the data before transforming any of it. Duplicates, nulls, mixed values, and orphaned foreign keys all got documented and triaged first, because finding those later means rebuilding. The interesting part came out of joining the two domains: late deliveries from Tier 2 suppliers lined up with higher defect rates on the production lines downstream. Neither dashboard shows that on its own, which is the argument for building both off one model.</p>
 						<ul class="actions special">
 							<li><a href="sql.html#operations-analytics-section" class="button">See the SQL Build</a></li>
 						</ul>
