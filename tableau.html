@@ -33,26 +33,61 @@
 			<div id="main">
 				<section class="post">
 
-					<section id="covid-viz-section">
+					<header class="major">
+						<h1>Tableau</h1>
+						<p>Built for Exploration</p>
+					</header>
+
+					<p>Tableau is where I build things people explore rather than read. A Power BI report tends to answer a defined set of questions on a schedule. A Tableau dashboard invites someone to poke at it, filter down to their own slice, and follow a thread I never anticipated. Both have their place. The choice comes down to whether the audience needs an answer or needs to go looking for one.</p>
+
+					<p>The same design discipline carries over. Neutral holds the structure, and color marks the thing worth noticing. Every panel on the dashboard below is click-to-filter, so a question that starts in one place gets answered across the whole view without anyone writing a query.</p>
+
+					<section id="hr-analytics-section">
 						<header class="major">
-							<h1>Covid-19 Tableau Visualization</h1>
-							<p>From SQL Transformation to Interactive Dashboard</p>
+							<h1>HR Analytics Dashboard</h1>
+							<p>Workforce Overview &middot; Headcount, Movement, Demographics, and Pay</p>
 						</header>
-						<div class="image main"><img src="images/pexels-edward-jenner-4031867.jpg" alt="" /></div>
-						<p>Once the WHO Covid-19 datasets were transformed and joined in SQL, I brought the results into Tableau to show infections and deaths by country and continent. The numbers on their own are hard to sit with. Putting them on a map and letting someone move through the timeline is what makes the progression land.</p>
-						<p>The SQL transformation work behind this visualization is on the Other Projects tab.</p>
+
+						<div class="image main"><img src="images/tableau-hr-dashboard.png" alt="Human Resources dashboard covering headcount, department movement, locations, demographics, and salary distribution" /></div>
+
+						<p>A workforce overview built around the questions an HR leader actually opens a dashboard to answer. How many people do we have, who is coming in and going out, where are they, and what does the pay picture look like across education and role.</p>
+
+						<p><strong>The layout runs three panels.</strong> Overview carries headcount, hires, and terminations with the trend behind each, then breaks them out by department so churn is visible against the size of the team. Demographics covers the gender split, education against age, and a performance matrix showing where the strongest people sit by credential. Income puts salary against education and gender, then plots age against salary with job titles called out, which is where most compensation questions start.</p>
+
+						<p><strong>The department bars carry the color.</strong> Hires and terminations sit in the same bar, so a team losing people faster than it replaces them reads immediately without anyone calculating a rate. Operations shows 2,429 against 289, Sales 1,634 against 201. The rest of the layout stays neutral so those bars hold the attention.</p>
+
+						<p><strong>Every panel is click-to-filter.</strong> Selecting a department reframes demographics and income around that group alone, so a question that starts in one panel gets answered in the other two. Four filters across the top handle gender, location, status, and hire date for anything the panels do not cover.</p>
+
 						<ul class="actions special">
-							<li><a href="https://public.tableau.com/views/CovidAnalysis_17546826181140/Dashboard1?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link" class="button">View Dashboard</a></li>
+							<li><a href="https://public.tableau.com/app/profile/eddy.acquah/viz/HRAnalyticsDashboard_17508029028110/HR" class="button">Open the Dashboard</a></li>
 						</ul>
 					</section>
 
+					<hr />
+
+					<section id="covid-viz-section">
+						<header class="major">
+							<h2>Covid-19 Visualization</h2>
+							<p>From SQL Transformation to Interactive Dashboard</p>
+						</header>
+						<div class="image main"><img src="images/pexels-edward-jenner-4031867.jpg" alt="Covid-19 data visualization project" /></div>
+						<p>Once the WHO Covid-19 datasets were transformed and joined in SQL, I brought the results into Tableau to show infections and deaths by country and continent. The numbers on their own are hard to sit with. Putting them on a map and letting someone move through the timeline is what makes the progression land.</p>
+						<p>The SQL transformation work behind this visualization is on the Other Projects tab.</p>
+						<ul class="actions special">
+							<li><a href="https://public.tableau.com/views/CovidAnalysis_17546826181140/Dashboard1?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link" class="button">Open the Dashboard</a></li>
+							<li><a href="other-projects.html#covid" class="button">See the SQL Build</a></li>
+						</ul>
+					</section>
+
+					<hr />
+
 					<section id="tableau-public-section">
 						<header class="major">
-							<h1>Tableau Public Dashboard Collection</h1>
-							<p>HR Analytics, Executive Overviews, and Sales Visuals</p>
+							<h2>Tableau Public Collection</h2>
+							<p>Executive Overviews, Compensation, and Sales Visuals</p>
 						</header>
-						<div class="image main"><img src="images/icons8-tableau-software-480.png" alt="" /></div>
-						<p>A collection of interactive dashboards I keep on Tableau Public. The HR Analytics work tracks workforce metrics, the Executive Overviews are built for leadership audiences who want the picture in one screen, and the Sales visuals go deeper into performance trends and territory breakdowns.</p>
+						<div class="image main"><img src="images/icons8-tableau-software-480.png" alt="Tableau Public" /></div>
+						<p>The rest of my published work sits on Tableau Public. Executive Overview reports built for leadership audiences, a bonus analysis covering compensation distribution, and sales visuals working through performance trends and territory breakdowns. The collection spans a few different domains on purpose, because the design questions change depending on who is going to open the thing.</p>
 						<ul class="actions special">
 							<li><a href="https://public.tableau.com/app/profile/eddy.acquah/vizzes" class="button">View on Tableau Public</a></li>
 						</ul>
