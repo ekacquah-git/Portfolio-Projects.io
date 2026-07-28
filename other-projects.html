@@ -101,17 +101,38 @@
 
 					<section id="snowpipe">
 						<header class="major">
-							<h2>Snowpipe with AWS S3 and Azure Blob Storage</h2>
+							<h2>Snowpipe with Azure Blob Storage and AWS S3</h2>
 							<p>Automated Pipeline Ingestion into Snowflake</p>
 						</header>
-						<p>I built a pipeline connecting cloud object storage to Snowflake that watches for file uploads and processes whatever lands, structured or unstructured, so the warehouse updates itself as new data arrives.</p>
-						<p><strong>Goal:</strong> Getting the warehouse to update on its own whenever new data shows up.</p>
+
+						<p>Snowpipe watches a cloud storage container and loads files into Snowflake as they land, so the warehouse updates itself with nobody starting the job. I have built this against both Azure Blob Storage and AWS S3. The two clouds differ in the details, but the shape is the same in both: Snowflake generates an identity, you go approve that identity on the cloud provider's side, and then storage events trigger the load.</p>
+
+						<p>That approval step is the part worth understanding. Snowflake never holds your storage credentials. You create a storage integration, run DESC on it, and Snowflake hands back an identity it created for you. You take that identity to the cloud provider and grant it read access to the specific container you named. Until that grant exists, the integration is inert. The same handshake repeats for the notification path that triggers the loads.</p>
+
+						<h3>Azure Blob Storage</h3>
+
+						<p>The storage integration declares the tenant and the exact container Snowflake is allowed to reach. Running DESC on it returns a consent URL and a multi-tenant app name. Visiting that URL registers the Snowflake service principal in Azure Active Directory, and from there the app gets the Storage Blob Data Reader role scoped to the storage account. An external stage then points at the container and reads it directly.</p>
+
+						<p>The event side of Azure takes more assembly. Blob creation events go to Event Grid, which publishes them to a Storage Queue that you create. Snowflake reads that queue through a notification integration, which carries the queue URI and the tenant, and needs its own consent grant with the Storage Queue Data Contributor role. On the compliance model I ran three separate queues, one per source file, with a notification integration for each.</p>
+
+						<p>Each pipe then binds a queue to a table and filters with a pattern, so a file dropped into the container reaches only the table it belongs to. Three files, three queues, three pipes, and no cross-loading. SYSTEM$PIPE_STATUS confirms each one is running and shows the pending file count if a load backs up.</p>
+
+						<h3>AWS S3</h3>
+
+						<p>On AWS the storage integration names an IAM role rather than a tenant. Running DESC returns an IAM user ARN and an external ID that Snowflake generated for your account. Both go into the trust policy of that IAM role, which is what allows Snowflake to assume it. The role itself carries a policy granting read access to the bucket and prefix you specified.</p>
+
 						<div class="image main"><img src="images/AWS S3 bucket configuration.JPG" alt="AWS S3 bucket and IAM configuration" /></div>
-						<p>AWS S3 buckets handled the storage and IAM handled the secure connection between the two. On the Snowflake side I built the objects that receive and stage whatever comes through. The same pattern works against Azure Blob Storage using a storage integration and a notification queue in place of the S3 event.</p>
+
+						<p>S3 buckets and IAM provided the storage and the secure connection. On the Snowflake side I built the objects that receive and stage whatever comes through.</p>
+
 						<div class="image main"><img src="images/Snowpipe buildout.JPG" alt="Snowpipe object buildout in Snowflake" /></div>
-						<p>Those objects are the databases, schemas, and tables that sit at the end of the pipe.</p>
+
+						<p>Those objects are the databases, schemas, and tables that sit at the end of the pipe. The notification path here is simpler than on Azure. You create the pipe with AUTO_INGEST enabled, and Snowflake provisions and manages an SQS queue on its own. SHOW PIPES returns that queue ARN, and you point an S3 event notification at it for object-created events. Snowflake owns the queue, so there is one less piece to maintain.</p>
+
 						<div class="image main"><img src="images/Confirming pipeline build and Ability to stop.JPG" alt="Confirming the pipeline build and pause capability" /></div>
-						<p>Once it was running, any new upload streamed straight through and became a live feed of new records. Being able to pause the pipe matters more than it sounds, because it lets you hold ingestion while a source problem gets fixed rather than loading bad data and cleaning up after.</p>
+
+						<p>Once it was running, any new upload streamed straight through and became a live feed of new records. Being able to pause the pipe matters more than it sounds. It lets you hold ingestion while a source problem gets fixed, so bad data stays out of Bronze and you skip the cleanup entirely.</p>
+
 						<p>I used a similar setup to keep continuous watch on workforce wages and data integrity inside our HCM, which is where this pattern really proved itself.</p>
 					</section>
 
