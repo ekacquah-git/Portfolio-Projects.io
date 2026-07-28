@@ -34,7 +34,7 @@
 
 					<header class="major">
 						<h1>Power BI Projects</h1>
-						<p>Nine projects across Retail, FP&amp;A, Supply Chain, Manufacturing, and Workforce Analytics</p>
+						<p>Work across Retail, FP&amp;A, Supply Chain, Manufacturing, and Workforce Analytics</p>
 					</header>
 
 					<!-- RETAIL -->
@@ -45,8 +45,8 @@
 							<p>[Retail]</p>
 						</header>
 						<div class="image main"><img src="images/adventureworks-screenshot.png" alt="Adventure Works Power BI Dashboard" /></div>
-						<p>End-to-end Power BI build on the Adventure Works retail dataset. Built progressively through five stages: Power Query cleaning, data model construction, DAX measure development, visualization, and AI-assisted insight using Key Influencers and Decomposition Tree.</p>
-						<p>Star schema across 2020-2022 sales transactions, customer, product, territory, returns, and calendar dimensions. Key metrics cover revenue, profit, and order volume by period and territory, customer segmentation by revenue contribution, return rates, and year-over-year growth trends.</p>
+						<p>A full Power BI build on the Adventure Works retail dataset, worked through in five stages: cleaning in Power Query, building the model, writing the DAX, putting the visuals together, and finally letting Key Influencers and Decomposition Tree surface patterns on their own. I built it in stages on purpose so each layer had to hold up before the next one went on top of it.</p>
+						<p>The model is a star schema covering three years of sales alongside customer, product, territory, returns, and calendar dimensions. From there it answers the questions a retail team actually asks: where revenue and profit are coming from, which customers carry the most weight, what is getting returned, and how any of it compares to last year.</p>
 					</section>
 
 					<section id="mavenmarket-section">
@@ -55,54 +55,54 @@
 							<p>[Retail]</p>
 						</header>
 						<div class="image main"><img src="images/maven-market-screenshot.png" alt="Maven Market Power BI Dashboard" /></div>
-						<p>Full Power BI build on the Maven Market grocery retail dataset covering two years of transaction data (1997-1998). Star schema connecting two separate fact tables to store, product, customer, regional, returns, and calendar dimensions.</p>
-						<p>Key metrics: sales volume and revenue by store, region, and product. Customer purchase behavior and loyalty metrics. Return rates by product category. Year-over-year comparison across 1997 and 1998. Store-level performance ranking.</p>
+						<p>A Power BI build on the Maven Market grocery dataset, covering two years of transactions across 1997 and 1998. The interesting wrinkle here is two separate fact tables feeding one star schema, joined out to store, product, customer, regional, returns, and calendar dimensions.</p>
+						<p>What it surfaces is the stuff a grocery chain runs on. How each store and region is performing, what customers keep coming back for, which categories are getting returned, and how any store stacks up against the rest of the chain year over year.</p>
 					</section>
 
 					<!-- FP&A -->
 
 					<section id="fpa-section">
 						<header class="major">
-							<h2>FP&amp;A Analytics &mdash; Budget vs. Actuals &amp; P&amp;L Reporting</h2>
+							<h2>FP&amp;A Analytics &middot; Budget vs. Actuals &amp; P&amp;L Reporting</h2>
 							<p>[FP&amp;A]</p>
 						</header>
 						<div class="image main"><img src="images/fpa-screenshot.png" alt="FP&A Power BI Dashboard" /></div>
-						<p>Power BI solution supporting monthly business reviews, budget accountability, and full-year forecasting across three fiscal years. Budget and actuals are kept as separate fact tables because they have different granularity and different refresh cadences.</p>
-						<p>A P&amp;L sort order calculated column on the accounts dimension enforces income statement sequence across all visuals. Three report pages: Executive P&amp;L Dashboard with budget vs. actual variance, Department Budget Tracking with drill-through, and Forecast and Trend Analysis with full-year projection built from actuals to date plus remaining budget.</p>
+						<p>A Power BI build supporting monthly business reviews, budget accountability, and full-year forecasting across three fiscal years. Budget and actuals live in separate fact tables here. They come in at different grain and refresh on different schedules, so forcing them into one table creates problems you end up unwinding later.</p>
+						<p>A sort order column on the accounts dimension keeps everything in proper income statement sequence, which sounds minor until a CFO opens a report and the lines are in the wrong order. There are three pages: an executive P&amp;L view showing budget against actual variance, department budget tracking with drill-through, and a forecast page that projects the full year using actuals to date plus whatever budget is left.</p>
 					</section>
 
 					<!-- SUPPLY CHAIN -->
 
 					<section id="supply-chain-1-section">
 						<header class="major">
-							<h2>Supply Chain Analytics &mdash; Fulfillment Performance</h2>
+							<h2>Supply Chain Analytics &middot; Fulfillment Performance</h2>
 							<p>[Supply Chain]</p>
 						</header>
 						<div class="image main"><img src="images/supply-chain-1-screenshot.png" alt="Supply Chain Fulfillment Power BI Dashboard" /></div>
-						<p>Logistics and fulfillment analytics covering shipment tracking, freight cost analysis, on-time delivery performance, and carrier benchmarking. Star schema with two fact tables: fact_shipments (5,000 rows) and fact_orders (5,060 rows), plus four dimension tables. Date table built in Power Query covering 2023-2025 and marked for time intelligence.</p>
-						<p>Data quality work included removing duplicate order line IDs, excluding negative freight costs, flagging fulfillment anomalies, and documenting orphaned foreign keys. Computed columns added: delivery days, on-time flag, and freight cost per unit. Three report pages covering executive KPIs, freight cost by carrier and lane, and delivery performance with drill-through.</p>
+						<p>Logistics and fulfillment analytics covering shipment tracking, freight costs, on-time delivery, and how carriers compare against each other. The model runs on two fact tables, roughly 5,000 shipments and 5,060 orders, joined out to four dimensions. The date table was built in Power Query across 2023 to 2025 and marked properly so time intelligence works the way it should.</p>
+						<p>Before any of that worked I had to deal with the data. Duplicate order line IDs, negative freight costs, fulfillment anomalies, and orphaned foreign keys all got handled and documented first. Then I added the columns that make the analysis possible: delivery days, an on-time flag, and freight cost per unit. Three pages came out of it, covering executive KPIs, freight cost broken down by carrier and lane, and delivery performance with drill-through.</p>
 					</section>
 
 					<section id="supply-chain-2-section">
 						<header class="major">
-							<h2>Supply Chain Analytics &mdash; Salesforce Vendor Performance</h2>
+							<h2>Supply Chain Analytics &middot; Salesforce Vendor Performance</h2>
 							<p>[Supply Chain]</p>
 						</header>
 						<div class="image main"><img src="images/supply-chain-2-screenshot.png" alt="Supply Chain Salesforce Power BI Dashboard" /></div>
-						<p>Vendor performance dashboard built from Salesforce CRM data exports. Four source CSVs: PO line items, vendor master, supply disruption cases, and products. Models the kind of analytics a Business Systems Analyst builds when Salesforce is the operational data source.</p>
-						<p>The key metric is the case-to-PO ratio, a risk signal showing which vendors generate the most supply disruption cases relative to their purchase order volume. Data quality work included deduplication, negative unit cost flagging, quantity anomaly documentation, and vendor ID casing standardization for reliable joins.</p>
+						<p>A vendor performance dashboard built from Salesforce CRM exports, pulling together four sources: PO line items, the vendor master, supply disruption cases, and products. This is the kind of build you end up doing when Salesforce is where the operational data actually lives.</p>
+						<p>The metric that matters here is the case-to-PO ratio. A vendor with a lot of disruption cases is not necessarily a problem if they are also handling a lot of volume, so measuring cases against purchase order count is what separates a genuinely risky vendor from a busy one. Getting there meant deduplicating records, flagging negative unit costs, documenting quantity anomalies, and standardizing vendor ID casing so the joins would hold.</p>
 					</section>
 
 					<!-- MANUFACTURING -->
 
-					<section id="axon-ops-section">
+					<section id="operations-analytics-section">
 						<header class="major">
-							<h2>Axon Operations Analytics Platform</h2>
+							<h2>Operations Analytics Platform</h2>
 							<p>[Manufacturing]</p>
 						</header>
 						<div class="image main"><img src="images/cfa2af18-ecdf-4ba8-b85b-c113fbe6176c.jpg" alt="" /></div>
-						<p>Production-grade analytics platform for an operations team covering quality control and supply chain performance. Three-schema medallion architecture in PostgreSQL: raw (landing zone only), core (cleaned views equivalent to dbt models), and mart (pre-aggregated tables that Power BI connects to directly).</p>
-						<p>Data quality profiling ran before any transformation: duplicates, nulls, mixed values, and orphaned foreign keys all documented and triaged. Window functions and CTEs handled cross-domain joins. The headline finding: late-arriving deliveries from Tier 2 suppliers correlated with higher defect rates on downstream production lines.</p>
+						<p>Operations teams usually track quality and supply chain separately, which makes it hard to see how one affects the other. I built this platform to put both in the same place. It runs on a three-schema setup in PostgreSQL: raw holds the landing zone, core holds the cleaned views, and mart holds the pre-aggregated tables that Power BI actually connects to.</p>
+						<p>I profiled the data before transforming any of it. Duplicates, nulls, mixed values, and orphaned foreign keys all got documented and triaged first, because finding those later means rebuilding. The interesting part came out of joining the two domains: late deliveries from Tier 2 suppliers lined up with higher defect rates on the production lines downstream. That connection stays invisible if you keep the data in separate reports.</p>
 					</section>
 
 					<!-- WORKFORCE -->
@@ -112,8 +112,8 @@
 							<h2>TA Conversion Report Investigation</h2>
 							<p>[Workforce]</p>
 						</header>
-						<p>The Talent Acquisition dashboard started showing conversion rate drops that did not match what the recruiting team was experiencing on the ground. I traced the discrepancy back through the data pipeline and identified a sourcing categorization issue that was misattributing candidates, skewing funnel metrics across the board.</p>
-						<p>After the fix, I rebuilt the dashboard with Power BI's native Key Insights AI feature, which automatically surfaces statistically notable changes in conversion rates, volume, and funnel drop-off each week. The weekly VP review shifted from reviewing numbers to making decisions.</p>
+						<p>The Talent Acquisition dashboard started showing conversion rates dropping in a way that did not match what the recruiting team was seeing day to day. When the people doing the work tell you the number is wrong, that is usually worth listening to. I traced it back through the pipeline and found a sourcing categorization issue that was misattributing candidates and throwing off funnel metrics across the board.</p>
+						<p>Once that was corrected I rebuilt the dashboard using Power BI's Key Insights feature, which flags statistically notable weekly changes in conversion rates, volume, and funnel drop-off on its own. That changed the character of the weekly VP review. The analysis was already done by the time everyone sat down, so the meeting could be about decisions.</p>
 					</section>
 
 					<section id="turnover-scorecard-section">
@@ -121,8 +121,8 @@
 							<h2>School Turnover Scorecard</h2>
 							<p>[Workforce]</p>
 						</header>
-						<p>Staff turnover across a large school network was being tracked at the aggregate level, which made it easy to miss site-level problems until they were already critical. I built a scorecard that surfaced turnover rates, tenure distributions, and exit patterns at the individual school level, rolling up to region and network views.</p>
-						<p>School leaders got a monthly snapshot of where they stood relative to the network. HR could identify which sites needed attention before the situation worsened. Aggregate numbers were masking location-specific problems that required different interventions.</p>
+						<p>Staff turnover across the school network was being tracked in aggregate, which meant a school could be in serious trouble for months before anyone upstream noticed. I built a scorecard that broke turnover rates, tenure distributions, and exit patterns down to the individual school, then rolled them up to region and network views.</p>
+						<p>School leaders got a monthly snapshot showing where they stood against the rest of the network. HR could see which sites needed attention while there was still time to do something about it. The aggregate view had been hiding location-specific problems, and those problems needed different responses depending on the site.</p>
 					</section>
 
 					<section id="bonus-allocation-section">
@@ -130,8 +130,8 @@
 							<h2>Bonus Allocation Model</h2>
 							<p>[Workforce]</p>
 						</header>
-						<p>Discretionary bonus allocations across a large employee population had no consistent structure behind them. I built a model that applied objective criteria to the process, factoring in performance metrics, tenure, and role classification, and surfaced the results in a Power BI report that managers could review and adjust within defined parameters.</p>
-						<p>What had been a manually driven process became something auditable and repeatable. Allocation decisions were no longer difficult to defend if questioned. Leadership had visibility into distribution patterns across departments and locations.</p>
+						<p>Discretionary bonus allocations across a large employee population were being made without much consistent structure behind them. I built a model that applied objective criteria to the process, weighing performance metrics, tenure, and role classification, and put the results in a Power BI report managers could review and adjust inside defined parameters.</p>
+						<p>A process that had been manual and largely undocumented became auditable and repeatable. Allocation decisions held up when leadership questioned them, which was the real point. And for the first time there was visibility into how bonuses were distributing across departments and locations.</p>
 					</section>
 
 				</section>

@@ -32,27 +32,27 @@
 			<div id="main">
 				<section class="post">
 
-					<section id="axon-pipeline-section">
+					<section id="manufacturing-pipeline-section">
 						<header class="major">
-							<h1>Axon Manufacturing Pipeline</h1>
+							<h1>Manufacturing Data Pipeline</h1>
 							<p>Azure Blob Storage to Snowflake Bronze / Silver / Gold</p>
 						</header>
-						<p>Manufacturing environments generate data across disconnected systems. Supplier records, production logs, and equipment telemetry do not arrive in a format ready for analysis. I built a pipeline to normalize all of it into a single queryable layer.</p>
+						<p>Manufacturing environments spread their data across systems that were never designed to talk to each other. Supplier records, production logs, and equipment telemetry all arrive in different shapes, and every one of them needs work before anything can be joined. I built a pipeline to pull all of it into a single queryable layer.</p>
 						<div class="image main"><img src="images/cfa2af18-ecdf-4ba8-b85b-c113fbe6176c.jpg" alt="" /></div>
-						<p><strong>Architecture:</strong> Raw CSV files land in Azure Blob Storage and flow into a Bronze / Silver / Gold medallion architecture in Snowflake. Bronze holds source data exactly as received. Silver applies transformations: UNPIVOT for metric reshaping, LATERAL FLATTEN for JSON device telemetry, surrogate key generation for dimensional modeling. Gold delivers an analytics-ready supplier scorecard and quality trend layer.</p>
-						<p><strong>Key Output:</strong> A production-grade Snowflake warehouse covering supplier delivery performance, defect rates, and downtime contribution by vendor and period.</p>
+						<p><strong>Architecture:</strong> Raw CSV files land in Azure Blob Storage and flow into a Bronze, Silver, and Gold medallion setup in Snowflake. Bronze keeps the source data exactly as it arrived, so there is always something to go back to. Silver is where the work happens: UNPIVOT to reshape the metrics, LATERAL FLATTEN to open up the JSON device telemetry, and surrogate keys to make the dimensional model hold together. Gold is what analysis touches, delivering a supplier scorecard and a quality trend layer.</p>
+						<p><strong>Key Output:</strong> A Snowflake warehouse that answers the questions an operations team keeps coming back to. How each supplier is performing on delivery, where the defects are concentrated, and which vendors are contributing the most downtime in any given period.</p>
 					</section>
 
 					<section id="compliance-model-section">
 						<header class="major">
 							<h1>Minimum Wage Compliance Model</h1>
-							<p>Azure Blob Storage to Snowflake to Power BI — Professional Build</p>
+							<p>Azure Blob Storage to Snowflake to Power BI &middot; Professional Build</p>
 						</header>
-						<p>The benefits in establishing data pipelines for real-time updates have been a must in my experience. Often times, it enabled proactive workforce management and continuous compliance monitoring.</p>
-						<p>Minimum wage law changes at the state and local level created ongoing exposure risk across multiple jurisdictions. I built a compliance model that tracked every active employee against applicable minimums by jurisdiction, including city-level overrides for California. Raw payroll data landed from Azure Blob Storage into Bronze, moved through transformation in Silver, and materialized in Gold for Power BI reporting.</p>
-						<p><strong>Architecture:</strong> Bronze held raw CSV exactly as received, intentional data quality issues included. Silver applied TRY_TO_DOUBLE to strip dollar-sign and comma formatting, CASE statements to normalize job class variants, and a UNPIVOT via UNION ALL converting three rate period columns per jurisdiction into one row per period. Remote employees were resolved to work state via COALESCE. A 5% buffer flagged At Risk employees before breach, not after.</p>
-						<p><strong>Gold layer:</strong> Two materialized mart tables. MART_COMPLIANCE_CURRENT gave one row per active employee with compliance status and annualized exposure. MART_COMPLIANCE_UPCOMING gave forward-looking rows per employee per upcoming rate period. Power BI connected to Gold only.</p>
-						<p><strong>Key Output:</strong> A monthly compliance dashboard surfacing exposure by jurisdiction, title, and employee — with enough lead time to act before effective dates hit.</p>
+						<p>The benefits in establishing data pipelines for real-time updates have been a must in my experience. More often than not, that is what made proactive workforce management and continuous compliance monitoring possible in the first place.</p>
+						<p>Minimum wage law changes at the state and local level meant we were carrying exposure across a lot of jurisdictions at once, and it moved constantly. I built a compliance model that checked every active employee against the minimum that applied to them, right down to the city-level overrides in California. Raw payroll data landed from Azure Blob Storage into Bronze, went through transformation in Silver, and materialized in Gold for Power BI to report on.</p>
+						<p><strong>Architecture:</strong> Bronze held the raw CSV exactly as it came in, data quality problems and all, because that is the point of a landing zone. Silver did the cleanup: TRY_TO_DOUBLE to strip out dollar signs and commas, CASE statements to normalize the job class variants, and a UNPIVOT through UNION ALL that turned three rate period columns per jurisdiction into one row per period. Remote employees got resolved to their work state through COALESCE. A 5% buffer flagged At Risk employees while there was still time to correct it.</p>
+						<p><strong>Gold layer:</strong> Two materialized mart tables did the heavy lifting. MART_COMPLIANCE_CURRENT gave one row per active employee with their compliance status and annualized exposure. MART_COMPLIANCE_UPCOMING looked ahead, one row per employee for every upcoming rate period. Power BI connected to Gold and nothing else, which kept the reporting layer clean.</p>
+						<p><strong>Key Output:</strong> A monthly compliance dashboard that surfaced exposure by jurisdiction, title, and employee, with enough lead time for people to act before the effective dates hit.</p>
 					</section>
 
 					<section id="snowpipe-section">
@@ -60,15 +60,15 @@
 							<h1>Snowpipe with AWS S3</h1>
 							<p>Automated Pipeline Ingestion from AWS S3 to Snowflake</p>
 						</header>
-						<p>I built and implemented a data pipeline that integrated AWS S3 with Snowflake to detect file uploads and process both structured and unstructured data for real-time warehouse updates.</p>
+						<p>I built a pipeline connecting AWS S3 to Snowflake that watches for file uploads and processes whatever lands, structured or unstructured, so the warehouse updates itself as new data arrives.</p>
 						<div class="image main"><img src="images/cfa2af18-ecdf-4ba8-b85b-c113fbe6176c.jpg" alt="" /></div>
-						<p><strong>Goal:</strong> Automating updates with additions to the dataset.</p>
+						<p><strong>Goal:</strong> Getting the warehouse to update on its own whenever new data shows up.</p>
 						<div class="image main"><img src="images/AWS S3 bucket configuration.JPG" alt="" /></div>
-						<p>AWS S3 Buckets and IAM provided the storage and secure connection. Data objects were built in Snowflake to receive and stage data uploads.</p>
+						<p>AWS S3 buckets handled the storage and IAM handled the secure connection between the two. On the Snowflake side I built the objects that receive and stage whatever comes through.</p>
 						<div class="image main"><img src="images/Snowpipe buildout.JPG" alt="" /></div>
-						<p>These objects include databases, schemas, and tables as the endpoints.</p>
+						<p>Those objects are the databases, schemas, and tables that sit at the end of the pipe.</p>
 						<div class="image main"><img src="images/Confirming pipeline build and Ability to stop.JPG" alt="" /></div>
-						<p>The pipeline streamed updates in the event of new uploads, creating a real-time feed for newly generated records. A similar setup provisioned continuous monitoring of workforce wages and data integrity within our HCM.</p>
+						<p>Once it was running, any new upload streamed straight through and became a live feed of new records. I used a similar setup to keep continuous watch on workforce wages and data integrity inside our HCM, which is where this pattern really proved itself.</p>
 					</section>
 
 				</section>

@@ -37,28 +37,28 @@
 							<h1>Data Cleaning in SQL</h1>
 							<p>Reliable Analysis Starts with Clean Data</p>
 						</header>
-						<p>Cleaning and transformations are the unsung heroes in driving any analysis forward.</p>
+						<p>Cleaning and transformations are the unsung heroes in driving any analysis forward. Nobody puts them in a presentation, but every number downstream depends on them.</p>
 						<div class="image main"><img src="images/pexels-expect-best-79873-323780.jpg" alt="" /></div>
-						<p><strong>Goal:</strong> Data Readiness. Preparing the Nashville Housing dataset for analysis.</p>
+						<p><strong>Goal:</strong> Getting the Nashville Housing dataset into a state where analysis is actually possible.</p>
 						<div class="image main"><img src="images/Querying Nashville Housing Data.jpg" alt="" /></div>
 						<ul>
-							<li>An initial query shows a semi-structured dataset based off missing values and the records returned.</li>
+							<li>The first query tells you what you are dealing with. Missing values scattered throughout and records that do not line up the way you would want them to.</li>
 						</ul>
 						<div class="image main"><img src="images/Nashville Housing Dataset correcting Nulls.jpg" alt="" /></div>
 						<ul>
-							<li>Cleaned and standardized records to eliminate gaps and inconsistencies.</li>
+							<li>I cleaned and standardized the records to close the gaps and get the formatting consistent across the table.</li>
 						</ul>
 						<div class="image main"><img src="images/Nashville Housing Dataset transforming table, adding, splitting columns (1).PNG" alt="" /></div>
 						<ul>
-							<li>Address splits allow for readability and subsequent filtering.</li>
+							<li>Splitting the address into its own columns made the data readable and gave me something to filter on later.</li>
 						</ul>
 						<div class="image main"><img src="images/Updating inconsistent Nashville Housing Data.JPG" alt="" /></div>
 						<ul>
-							<li>Best practices need to be adhered. A View was created to delete duplicates rather than deleting from the raw data.</li>
+							<li>A View handled the duplicate removal, which kept the raw data intact. Deleting from source is the kind of shortcut you regret two months later.</li>
 						</ul>
 						<strong>Key Insights:</strong>
 						<ul>
-							<li>Properties may have multiple owners. Important to keep in mind for analysis surrounding individuals.</li>
+							<li>Properties can have multiple owners, which matters a great deal if you are analyzing anything at the individual level.</li>
 						</ul>
 					</section>
 
@@ -71,19 +71,19 @@
 						<p><strong>Question:</strong> How has the impact of Covid progressed over the years?</p>
 						<div class="image main"><img src="images/Querying covid deaths.JPG" alt="" /></div>
 						<ul>
-							<li>Datasets recorded values by day, giving values for death counts and death totals.</li>
+							<li>The source data recorded values by day, which gave me both daily death counts and running totals to work with.</li>
 						</ul>
 						<div class="image main"><img src="images/Covid Global Numbers.JPG" alt="" /></div>
 						<ul>
-							<li>Cases, deaths, and resulting mortality rates for reported cases as we progressed along the years.</li>
+							<li>From there I could track cases, deaths, and the mortality rates that came out of them as the years progressed.</li>
 						</ul>
 						<div class="image main"><img src="images/Country infection rates.JPG" alt="" /></div>
 						<div class="image main"><img src="images/Continent and Country queries for Death Count.JPG" alt="" /></div>
 						<strong>Key Insights:</strong>
 						<ul>
-							<li>Aggregations summarized by places of interest helped visualize respective impacts.</li>
+							<li>Aggregating by country and continent is what made the differences in impact visible.</li>
 						</ul>
-						<p>The Tableau visualizations built from this data are on the Tableau tab.</p>
+						<p>The Tableau visualizations I built from this data are on the Tableau tab.</p>
 						<ul class="actions special">
 							<li><a href="https://public.tableau.com/views/CovidAnalysis_17546826181140/Dashboard1?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link" class="button">View Visualization</a></li>
 						</ul>
