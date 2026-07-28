@@ -33,43 +33,78 @@
 			<div id="main">
 				<section class="post">
 
-					<section id="manufacturing-pipeline-section">
-						<header class="major">
-							<h1>Manufacturing Data Pipeline</h1>
-							<p>Azure Blob Storage to Snowflake Bronze / Silver / Gold</p>
-						</header>
-						<p>Manufacturing environments spread their data across systems that were never designed to talk to each other. Supplier records, production logs, and equipment telemetry all arrive in different shapes, and every one of them needs work before anything can be joined. I built a pipeline to pull all of it into a single queryable layer.</p>
-						<div class="image main"><img src="images/cfa2af18-ecdf-4ba8-b85b-c113fbe6176c.jpg" alt="" /></div>
-						<p><strong>Architecture:</strong> Raw CSV files land in Azure Blob Storage and flow into a Bronze, Silver, and Gold medallion setup in Snowflake. Bronze keeps the source data exactly as it arrived, so there is always something to go back to. Silver is where the work happens: UNPIVOT to reshape the metrics, LATERAL FLATTEN to open up the JSON device telemetry, and surrogate keys to make the dimensional model hold together. Gold is what analysis touches, delivering a supplier scorecard and a quality trend layer.</p>
-						<p><strong>Key Output:</strong> A Snowflake warehouse that answers the questions an operations team keeps coming back to. How each supplier is performing on delivery, where the defects are concentrated, and which vendors are contributing the most downtime in any given period.</p>
-					</section>
+					<header class="major">
+						<h1>Snowflake</h1>
+						<p>Medallion Pipelines Built on Azure Blob Storage and AWS S3</p>
+					</header>
+
+					<p>Snowflake is where I build pipelines that have to run on a schedule and hold up without supervision. Every project on this tab follows the same medallion pattern. Bronze holds source data exactly as it arrived, Silver does the cleaning and typing, and Gold holds the business logic that reporting reads. The value of that separation is that anyone can trace where a number came from, and a change in one layer stays in that layer.</p>
 
 					<section id="compliance-model-section">
 						<header class="major">
 							<h1>Minimum Wage Compliance Model</h1>
 							<p>Azure Blob Storage to Snowflake to Power BI &middot; Professional Build</p>
 						</header>
+
+						<div class="image main"><img src="images/compliance-dashboard-current.png" alt="Compliance dashboard showing current non-compliant employees and annual cost by business line" /></div>
+
 						<p>The benefits in establishing data pipelines for real-time updates have been a must in my experience. More often than not, that is what made proactive workforce management and continuous compliance monitoring possible in the first place.</p>
-						<p>Minimum wage law changes at the state and local level meant we were carrying exposure across a lot of jurisdictions at once, and it moved constantly. I built a compliance model that checked every active employee against the minimum that applied to them, right down to the city-level overrides in California. Raw payroll data landed from Azure Blob Storage into Bronze, went through transformation in Silver, and materialized in Gold for Power BI to report on.</p>
-						<p><strong>Architecture:</strong> Bronze held the raw CSV exactly as it came in, data quality problems and all, because that is the point of a landing zone. Silver did the cleanup: TRY_TO_DOUBLE to strip out dollar signs and commas, CASE statements to normalize the job class variants, and a UNPIVOT through UNION ALL that turned three rate period columns per jurisdiction into one row per period. Remote employees got resolved to their work state through COALESCE. A 5% buffer flagged At Risk employees while there was still time to correct it.</p>
-						<p><strong>Gold layer:</strong> Two materialized mart tables did the heavy lifting. MART_COMPLIANCE_CURRENT gave one row per active employee with their compliance status and annualized exposure. MART_COMPLIANCE_UPCOMING looked ahead, one row per employee for every upcoming rate period. Power BI connected to Gold and nothing else, which kept the reporting layer clean.</p>
-						<p><strong>Key Output:</strong> A monthly compliance dashboard that surfaced exposure by jurisdiction, title, and employee, with enough lead time for people to act before the effective dates hit.</p>
+
+						<p><strong>The goal</strong> was to answer a question nobody could answer with confidence: are we compliant across every jurisdiction we employ people in. Minimum wage and FLSA exempt thresholds change at federal, state, and city level on different effective dates, and we had employees in all of them. Getting to an answer meant every active employee had to be checked against the specific rule that applied to their work location.</p>
+
+						<p><strong>The purpose it served</strong> was moving HR Services from reactive to proactive. Rather than finding a violation after it happened, the model showed who was already out of compliance, who would fall out when the next rate took effect, and what each of those cost. The first pass surfaced $101K in current annual exposure across 27 employees, with a further $231K and 62 employees coming as upcoming thresholds took effect. HR Services used it to reach managers and school leaders ahead of the dates rather than after them.</p>
+
+						<p><strong>Architecture:</strong> Raw CSVs land in Azure Blob Storage and flow into Bronze through an external stage, with every field typed as VARCHAR so source formatting survives intact for data quality review. Silver strips dollar signs and comma formatting through TRY_TO_DOUBLE, standardizes casing on job class and employment status, resolves remote employees to a work state through COALESCE, and unpivots the jurisdiction lookup from one row per jurisdiction into one row per jurisdiction per rate period. Gold holds two mart tables: current compliance status for every active employee, and a forward-looking table showing who becomes non-compliant when upcoming rates land. Power BI connects to Gold and nothing else.</p>
+
+						<div class="image main"><img src="images/sf-schema-build.png" alt="Snowflake warehouse, database, and Bronze Silver Gold schema creation with Azure storage integration" /></div>
+						<p>The warehouse, database, and three schemas. Azure connects through a storage integration and an external stage reads the container directly, so ingestion needs no manual upload step. Tenant and account identifiers are redacted here.</p>
+
+						<div class="image main"><img src="images/sf-silver-unpivot.png" alt="Silver layer view unpivoting the jurisdiction lookup from wide to long format" /></div>
+						<p>Silver. The lookup arrives wide, one row per jurisdiction with rate periods spread across columns. This reshapes it long so every rate period becomes its own row, which is what makes the forward-looking mart possible at all.</p>
+
+						<div class="image main"><img src="images/sf-gold-threshold.png" alt="Gold layer CTE resolving California exempt thresholds before compliance logic runs" /></div>
+						<p>Gold. California city jurisdictions carry no exempt threshold, because that threshold is set at state level. A plain COALESCE would drop those employees to the federal floor and understate the exposure. Resolving it once in a CTE keeps every calculation downstream clean.</p>
+
+						<div class="image main"><img src="images/sf-gold-exposure.png" alt="Gold layer compliance status determination and annual cost exposure calculation" /></div>
+						<p>Gold. Compliance status with a 5% buffer that flags At Risk while there is still time to correct it, and the annualized dollar figure to bring each employee into compliance. That last column is what turned this from a report into a conversation people acted on.</p>
+
+						<div class="image main"><img src="images/compliance-dashboard-upcoming.png" alt="Forward-looking dashboard view showing upcoming non-compliant employees and effective dates" /></div>
+						<p>The forward-looking view. Which employees fall out of compliance at the next threshold, the date it takes effect, and what it costs. This is the page that made the model useful before a problem existed.</p>
 					</section>
 
-					<section id="snowpipe-section">
+					<hr />
+
+					<section id="manufacturing-pipeline-section">
 						<header class="major">
-							<h1>Snowpipe with AWS S3</h1>
-							<p>Automated Pipeline Ingestion from AWS S3 to Snowflake</p>
+							<h1>Manufacturing Data Pipeline</h1>
+							<p>Azure Blob Storage to Snowflake Bronze / Silver / Gold</p>
 						</header>
-						<p>I built a pipeline connecting AWS S3 to Snowflake that watches for file uploads and processes whatever lands, structured or unstructured, so the warehouse updates itself as new data arrives.</p>
-						<div class="image main"><img src="images/cfa2af18-ecdf-4ba8-b85b-c113fbe6176c.jpg" alt="" /></div>
-						<p><strong>Goal:</strong> Getting the warehouse to update on its own whenever new data shows up.</p>
-						<div class="image main"><img src="images/AWS S3 bucket configuration.JPG" alt="" /></div>
-						<p>AWS S3 buckets handled the storage and IAM handled the secure connection between the two. On the Snowflake side I built the objects that receive and stage whatever comes through.</p>
-						<div class="image main"><img src="images/Snowpipe buildout.JPG" alt="" /></div>
-						<p>Those objects are the databases, schemas, and tables that sit at the end of the pipe.</p>
-						<div class="image main"><img src="images/Confirming pipeline build and Ability to stop.JPG" alt="" /></div>
-						<p>Once it was running, any new upload streamed straight through and became a live feed of new records. I used a similar setup to keep continuous watch on workforce wages and data integrity inside our HCM, which is where this pattern really proved itself.</p>
+
+						<p>Manufacturing environments spread their data across systems that were never designed to talk to each other. Supplier records, production logs, and equipment telemetry all arrive in different shapes, and every one of them needs work before anything can be joined. I built a pipeline to pull all of it into a single queryable layer.</p>
+
+						<p><strong>Architecture:</strong> Raw CSV files land in Azure Blob Storage and flow into a Bronze, Silver, and Gold medallion setup in Snowflake. Bronze keeps the source data exactly as it arrived, so there is always something to go back to. Silver is where the work happens: UNPIVOT to reshape the metrics, LATERAL FLATTEN to open up the JSON device telemetry, and surrogate keys to make the dimensional model hold together. Gold is what analysis touches, delivering a supplier scorecard and a quality trend layer.</p>
+
+						<p><strong>Key Output:</strong> A Snowflake warehouse that answers the questions an operations team keeps coming back to. How each supplier is performing on delivery, where the defects are concentrated, and which vendors are contributing the most downtime in any given period.</p>
+					</section>
+
+					<hr />
+
+					<header class="major">
+						<h1>Pipeline Ingestion</h1>
+						<p>Automated loading from cloud object storage</p>
+					</header>
+
+					<section id="snowpipe-preview">
+						<h2>Snowpipe &middot; AWS S3 and Azure Blob Storage</h2>
+						<p>Automated ingestion that watches cloud storage for new files and loads them into Snowflake without anyone starting the job. Built on both AWS S3 and Azure Blob Storage, using storage integrations for the secure connection and notification queues to trigger the load.</p>
+						<div class="row">
+							<div class="col-4"><span class="image fit"><img src="images/AWS S3 bucket configuration.JPG" alt="AWS S3 bucket and IAM configuration" /></span></div>
+							<div class="col-4"><span class="image fit"><img src="images/Snowpipe buildout.JPG" alt="Snowpipe object buildout in Snowflake" /></span></div>
+							<div class="col-4"><span class="image fit"><img src="images/Confirming pipeline build and Ability to stop.JPG" alt="Confirming the pipeline build and pause capability" /></span></div>
+						</div>
+						<ul class="actions special">
+							<li><a href="other-projects.html#snowpipe" class="button">View Full Breakdown</a></li>
+						</ul>
 					</section>
 
 				</section>

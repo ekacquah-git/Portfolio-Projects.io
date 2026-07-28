@@ -38,7 +38,7 @@
 						<p>Earlier builds and standalone work where the fundamentals got worked out</p>
 					</header>
 
-					<p>These are the projects I built while getting the fundamentals right. The datasets are public and the problems are smaller, but the habits came out of here: profile before you transform, keep the raw data intact, and document why every step exists. The work on the tool tabs is built on what these taught me.</p>
+					<p>These are the builds that sit behind the work on the tool tabs. Some are where the fundamentals got worked out on public datasets, and some are the plumbing that other projects depend on. The habits came out of here: profile before you transform, keep the raw data intact, and document why every step exists.</p>
 
 					<section id="nashville">
 						<header class="major">
@@ -95,6 +95,24 @@
 						<ul class="actions special">
 							<li><a href="https://public.tableau.com/views/CovidAnalysis_17546826181140/Dashboard1?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link" class="button">View Visualization</a></li>
 						</ul>
+					</section>
+
+					<hr />
+
+					<section id="snowpipe">
+						<header class="major">
+							<h2>Snowpipe with AWS S3 and Azure Blob Storage</h2>
+							<p>Automated Pipeline Ingestion into Snowflake</p>
+						</header>
+						<p>I built a pipeline connecting cloud object storage to Snowflake that watches for file uploads and processes whatever lands, structured or unstructured, so the warehouse updates itself as new data arrives.</p>
+						<p><strong>Goal:</strong> Getting the warehouse to update on its own whenever new data shows up.</p>
+						<div class="image main"><img src="images/AWS S3 bucket configuration.JPG" alt="AWS S3 bucket and IAM configuration" /></div>
+						<p>AWS S3 buckets handled the storage and IAM handled the secure connection between the two. On the Snowflake side I built the objects that receive and stage whatever comes through. The same pattern works against Azure Blob Storage using a storage integration and a notification queue in place of the S3 event.</p>
+						<div class="image main"><img src="images/Snowpipe buildout.JPG" alt="Snowpipe object buildout in Snowflake" /></div>
+						<p>Those objects are the databases, schemas, and tables that sit at the end of the pipe.</p>
+						<div class="image main"><img src="images/Confirming pipeline build and Ability to stop.JPG" alt="Confirming the pipeline build and pause capability" /></div>
+						<p>Once it was running, any new upload streamed straight through and became a live feed of new records. Being able to pause the pipe matters more than it sounds, because it lets you hold ingestion while a source problem gets fixed rather than loading bad data and cleaning up after.</p>
+						<p>I used a similar setup to keep continuous watch on workforce wages and data integrity inside our HCM, which is where this pattern really proved itself.</p>
 					</section>
 
 				</section>
