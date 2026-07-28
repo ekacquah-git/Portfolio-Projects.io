@@ -22,6 +22,7 @@
 					<li><a href="snowflake.html">Snowflake</a></li>
 					<li><a href="powerbi.html">Power BI</a></li>
 					<li><a href="tableau.html">Tableau</a></li>
+					<li><a href="other-projects.html">Other Projects</a></li>
 				</ul>
 				<ul class="icons">
 					<li><a href="https://www.linkedin.com/in/eddy-acquah-472b0a279" class="icon brands alt fa-linkedin"><span class="label">linkedin</span></a></li>
@@ -32,60 +33,73 @@
 			<div id="main">
 				<section class="post">
 
-					<section id="cleaning-section">
+					<header class="major">
+						<h1>SQL</h1>
+						<p>Transformation and Cleaning in PostgreSQL</p>
+					</header>
+
+					<p>SQL is where most of the actual work happens in anything I build. Cleaning, reshaping, joining, and getting data into a structure that reporting can sit on top of. The queries shown on this tab are PostgreSQL. The pattern stays the same regardless of the project: profile the data first so you know what is wrong with it, then transform it deliberately and document why each step exists.</p>
+
+					<section id="operations-analytics-section">
 						<header class="major">
-							<h1>Data Cleaning in SQL</h1>
-							<p>Reliable Analysis Starts with Clean Data</p>
+							<h1>Operations Analytics Platform</h1>
+							<p>PostgreSQL &middot; Three-Schema Medallion Architecture</p>
 						</header>
-						<p>Cleaning and transformations are the unsung heroes in driving any analysis forward. Nobody puts them in a presentation, but every number downstream depends on them.</p>
-						<div class="image main"><img src="images/pexels-expect-best-79873-323780.jpg" alt="" /></div>
-						<p><strong>Goal:</strong> Getting the Nashville Housing dataset into a state where analysis is actually possible.</p>
-						<div class="image main"><img src="images/Querying Nashville Housing Data.jpg" alt="" /></div>
-						<ul>
-							<li>The first query tells you what you are dealing with. Missing values scattered throughout and records that do not line up the way you would want them to.</li>
-						</ul>
-						<div class="image main"><img src="images/Nashville Housing Dataset correcting Nulls.jpg" alt="" /></div>
-						<ul>
-							<li>I cleaned and standardized the records to close the gaps and get the formatting consistent across the table.</li>
-						</ul>
-						<div class="image main"><img src="images/Nashville Housing Dataset transforming table, adding, splitting columns (1).PNG" alt="" /></div>
-						<ul>
-							<li>Splitting the address into its own columns made the data readable and gave me something to filter on later.</li>
-						</ul>
-						<div class="image main"><img src="images/Updating inconsistent Nashville Housing Data.JPG" alt="" /></div>
-						<ul>
-							<li>A View handled the duplicate removal, which kept the raw data intact. Deleting from source is the kind of shortcut you regret two months later.</li>
-						</ul>
-						<strong>Key Insights:</strong>
-						<ul>
-							<li>Properties can have multiple owners, which matters a great deal if you are analyzing anything at the individual level.</li>
+
+						<p>Manufacturing quality and supply chain data arrives as exports from MES and ERP systems, which means it shows up in whatever shape the source system felt like producing. I built a three-schema medallion architecture in PostgreSQL to handle it. Raw holds source data exactly as received, core holds cleaned and type-safe views built on top of raw, and mart holds the aggregated tables Power BI reads. Each layer has one job, and that separation keeps all the transformation logic in SQL where it can be reviewed.</p>
+
+						<div class="image main"><img src="images/sql-medallion.png" alt="Three-schema medallion architecture: raw (Bronze), core (Silver), mart (Gold)" /></div>
+
+						<p>The source data covered eight tables across both domains: product, supplier, production line, and part dimensions alongside quality inspection, defect, inventory transaction, and purchase order facts. Before writing a single transformation I profiled all of them for duplicates, nulls, mixed values, and orphaned keys.</p>
+
+						<div class="image main"><img src="images/sql-core-clean.png" alt="Core layer view deduplicating and normalising quality inspections" /></div>
+						<p>Core layer. Deduplication through ROW_NUMBER, casing normalized with INITCAP. Six casing variants existed for what should have been two values, and 25 duplicate inspection records had to come out before any yield calculation could be trusted.</p>
+
+						<div class="image main"><img src="images/sql-core-flag.png" alt="Core layer view correcting signed quantities and flagging data quality issues" /></div>
+						<p>The judgment call in any cleaning job is deciding what to correct and what to leave visible. Issue rows carrying positive quantities get corrected because that is a known sign error. Everything else questionable gets a dq_flag and stays in the table, so the mart layer decides what to exclude and the operational signal survives.</p>
+
+						<div class="image main"><img src="images/sql-mart-fpy.png" alt="Mart layer table aggregating first pass yield by product line" /></div>
+						<p>Mart layer. First pass yield pre-aggregated by product line, with NULLIF guarding the division. These are tables rather than views because the aggregation cost is high and the data refreshes daily. Power BI reads this layer directly and never touches raw or core.</p>
+
+						<div class="image main"><img src="images/sql-pareto.png" alt="Defect Pareto analysis using window functions" /></div>
+						<p>A window function over the full result set gives each defect type its share, and a running total shows how few types account for most of the volume. This is the query that tells an operations team where to spend their attention first.</p>
+
+						<div class="image main"><img src="images/sql-mom-trend.png" alt="Month over month defect trend using LAG" /></div>
+						<p>LAG across fiscal periods turns a flat count into a trend, with the direction labeled in the query itself. Doing that work in SQL means the report arrives already interpreted.</p>
+
+						<p>The query that mattered most joined defect data back to supplier performance. Late-arriving parts from Tier 2 suppliers lined up with higher defect rates on the production lines they fed. That is the kind of finding that turns a data platform into something people make decisions with.</p>
+					</section>
+
+					<hr />
+
+					<header class="major">
+						<h1>Foundational SQL Work</h1>
+						<p>Earlier builds where the fundamentals got worked out</p>
+					</header>
+
+					<section id="nashville-preview">
+						<h2>Data Cleaning &middot; Nashville Housing</h2>
+						<p>Taking a messy property dataset with missing values, inconsistent formatting, and duplicate records, and getting it into a state where analysis is possible.</p>
+						<div class="row">
+							<div class="col-4"><span class="image fit"><img src="images/Querying Nashville Housing Data.jpg" alt="Initial query of the Nashville Housing dataset" /></span></div>
+							<div class="col-4"><span class="image fit"><img src="images/Nashville Housing Dataset correcting Nulls.jpg" alt="Correcting null values" /></span></div>
+							<div class="col-4"><span class="image fit"><img src="images/Updating inconsistent Nashville Housing Data.JPG" alt="Removing duplicates through a View" /></span></div>
+						</div>
+						<ul class="actions special">
+							<li><a href="other-projects.html#nashville" class="button">View Full Breakdown</a></li>
 						</ul>
 					</section>
 
-					<section id="transformation-section">
-						<header class="major">
-							<h1>Data Transformation in SQL</h1>
-							<p>Analysis Strengthened Through Transformation</p>
-						</header>
-						<div class="image main"><img src="images/pexels-edward-jenner-4031867.jpg" alt="" /></div>
-						<p><strong>Question:</strong> How has the impact of Covid progressed over the years?</p>
-						<div class="image main"><img src="images/Querying covid deaths.JPG" alt="" /></div>
-						<ul>
-							<li>The source data recorded values by day, which gave me both daily death counts and running totals to work with.</li>
-						</ul>
-						<div class="image main"><img src="images/Covid Global Numbers.JPG" alt="" /></div>
-						<ul>
-							<li>From there I could track cases, deaths, and the mortality rates that came out of them as the years progressed.</li>
-						</ul>
-						<div class="image main"><img src="images/Country infection rates.JPG" alt="" /></div>
-						<div class="image main"><img src="images/Continent and Country queries for Death Count.JPG" alt="" /></div>
-						<strong>Key Insights:</strong>
-						<ul>
-							<li>Aggregating by country and continent is what made the differences in impact visible.</li>
-						</ul>
-						<p>The Tableau visualizations I built from this data are on the Tableau tab.</p>
+					<section id="covid-preview">
+						<h2>Data Transformation &middot; Covid-19</h2>
+						<p>Transforming and joining WHO datasets to track how infections, deaths, and mortality rates moved across countries and continents over time.</p>
+						<div class="row">
+							<div class="col-4"><span class="image fit"><img src="images/Querying covid deaths.JPG" alt="Querying Covid death records" /></span></div>
+							<div class="col-4"><span class="image fit"><img src="images/Covid Global Numbers.JPG" alt="Global case and death totals" /></span></div>
+							<div class="col-4"><span class="image fit"><img src="images/Country infection rates.JPG" alt="Infection rates by country" /></span></div>
+						</div>
 						<ul class="actions special">
-							<li><a href="https://public.tableau.com/views/CovidAnalysis_17546826181140/Dashboard1?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link" class="button">View Visualization</a></li>
+							<li><a href="other-projects.html#covid" class="button">View Full Breakdown</a></li>
 						</ul>
 					</section>
 

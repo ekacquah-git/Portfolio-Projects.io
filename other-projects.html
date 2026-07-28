@@ -1,0 +1,140 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Other Projects | Eddy Acquah Portfolio</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<div id="wrapper">
+
+			<header id="header">
+				<a href="index.html" class="logo">Other Projects</a>
+			</header>
+
+			<nav id="nav">
+				<ul class="links">
+					<li><a href="index.html">Home</a></li>
+					<li><a href="sql.html">SQL</a></li>
+					<li><a href="snowflake.html">Snowflake</a></li>
+					<li><a href="powerbi.html">Power BI</a></li>
+					<li><a href="tableau.html">Tableau</a></li>
+					<li class="active"><a href="other-projects.html">Other Projects</a></li>
+				</ul>
+				<ul class="icons">
+					<li><a href="https://www.linkedin.com/in/eddy-acquah-472b0a279" class="icon brands alt fa-linkedin"><span class="label">linkedin</span></a></li>
+					<li><a href="https://github.com/ekacquah-git/Portfolio-Projects.io" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+				</ul>
+			</nav>
+
+			<div id="main">
+				<section class="post">
+
+					<header class="major">
+						<h1>Other Projects</h1>
+						<p>Earlier builds and standalone work where the fundamentals got worked out</p>
+					</header>
+
+					<p>These are the projects I built while getting the fundamentals right. The datasets are public and the problems are smaller, but the habits came out of here: profile before you transform, keep the raw data intact, and document why every step exists. The work on the tool tabs is built on what these taught me.</p>
+
+					<section id="nashville">
+						<header class="major">
+							<h2>Data Cleaning in SQL</h2>
+							<p>Nashville Housing &middot; Reliable Analysis Starts with Clean Data</p>
+						</header>
+						<p>Cleaning and transformations are the unsung heroes in driving any analysis forward. Nobody puts them in a presentation, but every number downstream depends on them.</p>
+						<p><strong>Goal:</strong> Getting the Nashville Housing dataset into a state where analysis is actually possible.</p>
+						<div class="image main"><img src="images/Querying Nashville Housing Data.jpg" alt="Initial query of the Nashville Housing dataset" /></div>
+						<ul>
+							<li>The first query tells you what you are dealing with. Missing values scattered throughout and records that do not line up the way you would want them to.</li>
+						</ul>
+						<div class="image main"><img src="images/Nashville Housing Dataset correcting Nulls.jpg" alt="Correcting null values" /></div>
+						<ul>
+							<li>I cleaned and standardized the records to close the gaps and get the formatting consistent across the table.</li>
+						</ul>
+						<div class="image main"><img src="images/Nashville Housing Dataset transforming table, adding, splitting columns (1).PNG" alt="Splitting address columns" /></div>
+						<ul>
+							<li>Splitting the address into its own columns made the data readable and gave me something to filter on later.</li>
+						</ul>
+						<div class="image main"><img src="images/Updating inconsistent Nashville Housing Data.JPG" alt="Removing duplicates through a View" /></div>
+						<ul>
+							<li>A View handled the duplicate removal, which kept the raw data intact. Deleting from source is the kind of shortcut you regret two months later.</li>
+						</ul>
+						<strong>Key Insights:</strong>
+						<ul>
+							<li>Properties can have multiple owners, which matters a great deal if you are analyzing anything at the individual level.</li>
+						</ul>
+					</section>
+
+					<hr />
+
+					<section id="covid">
+						<header class="major">
+							<h2>Data Transformation in SQL</h2>
+							<p>Covid-19 &middot; Analysis Strengthened Through Transformation</p>
+						</header>
+						<p><strong>Question:</strong> How has the impact of Covid progressed over the years?</p>
+						<div class="image main"><img src="images/Querying covid deaths.JPG" alt="Querying Covid death records" /></div>
+						<ul>
+							<li>The source data recorded values by day, which gave me both daily death counts and running totals to work with.</li>
+						</ul>
+						<div class="image main"><img src="images/Covid Global Numbers.JPG" alt="Global case and death totals" /></div>
+						<ul>
+							<li>From there I could track cases, deaths, and the mortality rates that came out of them as the years progressed.</li>
+						</ul>
+						<div class="image main"><img src="images/Country infection rates.JPG" alt="Infection rates by country" /></div>
+						<div class="image main"><img src="images/Continent and Country queries for Death Count.JPG" alt="Death counts by continent and country" /></div>
+						<strong>Key Insights:</strong>
+						<ul>
+							<li>Aggregating by country and continent is what made the differences in impact visible.</li>
+						</ul>
+						<p>The Tableau visualizations I built from this data are on the Tableau tab.</p>
+						<ul class="actions special">
+							<li><a href="https://public.tableau.com/views/CovidAnalysis_17546826181140/Dashboard1?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link" class="button">View Visualization</a></li>
+						</ul>
+					</section>
+
+				</section>
+			</div>
+
+			<footer id="footer">
+				<section class="split contact">
+					<section class="alt">
+						<h3>Location</h3>
+						<p>Queen Creek, AZ</p>
+					</section>
+					<section>
+						<h3>Phone</h3>
+						(480) 599-1967
+						<p> </p>
+					</section>
+					<section>
+						<h3>Email</h3>
+						ekacquah@gmail.com
+						<p> </p>
+					</section>
+					<section>
+						<h3>Social</h3>
+						<ul class="icons alt">
+							<li><a href="https://www.linkedin.com/in/eddy-acquah-472b0a279" class="icon brands alt fa-linkedin"><span class="label">linkedin</span></a></li>
+							<li><a href="https://github.com/ekacquah-git/Portfolio-Projects.io" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
+						</ul>
+					</section>
+				</section>
+			</footer>
+
+		</div>
+
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/jquery.scrollex.min.js"></script>
+		<script src="assets/js/jquery.scrolly.min.js"></script>
+		<script src="assets/js/browser.min.js"></script>
+		<script src="assets/js/breakpoints.min.js"></script>
+		<script src="assets/js/util.js"></script>
+		<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
