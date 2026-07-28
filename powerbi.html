@@ -34,105 +34,105 @@
 				<section class="post">
 
 					<header class="major">
-						<h1>Power BI Projects</h1>
-						<p>Work across Retail, FP&amp;A, Supply Chain, Manufacturing, and Workforce Analytics</p>
+						<h1>Power BI</h1>
+						<p>Reporting Built for Decisions</p>
 					</header>
 
-					<!-- RETAIL -->
+					<p>Power BI is where the work becomes something someone actually uses. I build reports the way I used to build operator interfaces: the screen should tell you where to look before you have read a single number. The design sits on a neutral base, and color gets used deliberately. When something needs attention, it is the only thing on the page carrying color, so the eye finds it without anyone pointing. A report where everything competes for attention is a report where nothing gets it.</p>
 
-					<section id="adventureworks-section">
-						<header class="major">
-							<h2>Adventure Works Sales &amp; Customer Analytics</h2>
-							<p>[Retail]</p>
-						</header>
-						<div class="image main"><img src="images/adventureworks-screenshot.png" alt="Adventure Works Power BI Dashboard" /></div>
-						<p>A full Power BI build on the Adventure Works retail dataset, worked through in five stages: cleaning in Power Query, building the model, writing the DAX, putting the visuals together, and finally letting Key Influencers and Decomposition Tree surface patterns on their own. I built it in stages on purpose so each layer had to hold up before the next one went on top of it.</p>
-						<p>The model is a star schema covering three years of sales alongside customer, product, territory, returns, and calendar dimensions. From there it answers the questions a retail team actually asks: where revenue and profit are coming from, which customers carry the most weight, what is getting returned, and how any of it compares to last year.</p>
-					</section>
-
-					<section id="mavenmarket-section">
-						<header class="major">
-							<h2>Maven Market Retail Analytics</h2>
-							<p>[Retail]</p>
-						</header>
-						<div class="image main"><img src="images/maven-market-screenshot.png" alt="Maven Market Power BI Dashboard" /></div>
-						<p>A Power BI build on the Maven Market grocery dataset, covering two years of transactions across 1997 and 1998. The interesting wrinkle here is two separate fact tables feeding one star schema, joined out to store, product, customer, regional, returns, and calendar dimensions.</p>
-						<p>What it surfaces is the stuff a grocery chain runs on. How each store and region is performing, what customers keep coming back for, which categories are getting returned, and how any store stacks up against the rest of the chain year over year.</p>
-					</section>
-
-					<!-- FP&A -->
+					<p>That habit comes from controls engineering. An operator watching dozens of values at once cannot evaluate all of them in real time, so the interface does the evaluating and surfaces only the exceptions. The same principle holds for a P&amp;L review or a compliance dashboard. Conditional formatting on variance, buffer thresholds that flag risk ahead of a breach, and watch lists that surface the bottom performers all do the same job. They move the analytical judgment into the model so the meeting can be about decisions.</p>
 
 					<section id="fpa-section">
 						<header class="major">
-							<h2>FP&amp;A Analytics &middot; Budget vs. Actuals &amp; P&amp;L Reporting</h2>
-							<p>[FP&amp;A]</p>
+							<h1>FP&amp;A Analytics</h1>
+							<p>Budget vs. Actuals and P&amp;L Reporting</p>
 						</header>
-						<div class="image main"><img src="images/fpa-screenshot.png" alt="FP&A Power BI Dashboard" /></div>
-						<p>A Power BI build supporting monthly business reviews, budget accountability, and full-year forecasting across three fiscal years. Budget and actuals live in separate fact tables here. They come in at different grain and refresh on different schedules, so forcing them into one table creates problems you end up unwinding later.</p>
-						<p>A sort order column on the accounts dimension keeps everything in proper income statement sequence, which sounds minor until a CFO opens a report and the lines are in the wrong order. There are three pages: an executive P&amp;L view showing budget against actual variance, department budget tracking with drill-through, and a forecast page that projects the full year using actuals to date plus whatever budget is left.</p>
+
+						<div class="image main"><img src="images/fpa-screenshot.png" alt="FP&A executive dashboard showing budget versus actual variance across the income statement" /></div>
+
+						<p><strong>The goal</strong> was to give a Director of FP&amp;A one place to run a monthly business review, hold departments to their budgets, and see where the full year was tracking. Three fiscal years of actuals and budget data across departments and GL accounts, answering three questions: which departments are over or under and by how much, where the P&amp;L lands by year end, and which cost categories are driving the variance.</p>
+
+						<p><strong>The purpose it served</strong> was making the monthly review a conversation about exceptions. The variance columns carry the conditional formatting, so a director opens the executive page and the departments that need discussion are already marked. Everything within tolerance stays neutral and quiet. That is the whole design intent: the report does the first pass of analysis so the meeting can start at the second.</p>
+
+						<p><strong>Architecture:</strong> A star schema with two fact tables sharing three dimensions. Budget and actuals stay separate rather than getting unioned, because they arrive at different grain and refresh on different schedules, and collapsing them creates a dependency that breaks the moment one source is late. A P&amp;L sort order calculated column on the accounts dimension enforces income statement sequence across every visual, which matters because income statement order is not alphabetical and a finance audience notices immediately.</p>
+
+						<p><strong>Data quality:</strong> Actuals needed sign reversal on expense accounts, duplicate transaction IDs removed, and date formats reconciled. Budget rows were missing department IDs that had to be recovered through a lookup join, and zero-amount allocation rows had to be handled deliberately so they stayed visible without distorting the variance math.</p>
+
+						<p><strong>Three report pages:</strong> An executive P&amp;L dashboard with full income statement, budget against actual variance, and YTD trend for the monthly review. A department budget tracking page with drill-through, showing each department's spend against allocation by account category. And a forecast page projecting the full year from actuals to date plus remaining budget, with run rate against annual target.</p>
 					</section>
 
-					<!-- SUPPLY CHAIN -->
+					<hr />
+
+					<header class="major">
+						<h1>Manufacturing and Supply Chain</h1>
+					</header>
+
+					<section id="operations-analytics-section">
+						<h2>Operations Analytics Platform</h2>
+						<p>Operations teams usually track quality and supply chain separately, which makes it hard to see how one affects the other. I built this platform to put both in the same place. It runs on a three-schema setup in PostgreSQL: raw holds the landing zone, core holds the cleaned views, and mart holds the pre-aggregated tables that Power BI actually connects to.</p>
+						<p>I profiled the data before transforming any of it. Duplicates, nulls, mixed values, and orphaned foreign keys all got documented and triaged first, because finding those later means rebuilding. The interesting part came out of joining the two domains: late deliveries from Tier 2 suppliers lined up with higher defect rates on the production lines downstream. That connection stays invisible if you keep the data in separate reports.</p>
+						<ul class="actions special">
+							<li><a href="sql.html#operations-analytics-section" class="button">See the SQL Build</a></li>
+						</ul>
+					</section>
 
 					<section id="supply-chain-1-section">
-						<header class="major">
-							<h2>Supply Chain Analytics &middot; Fulfillment Performance</h2>
-							<p>[Supply Chain]</p>
-						</header>
-						<div class="image main"><img src="images/supply-chain-1-screenshot.png" alt="Supply Chain Fulfillment Power BI Dashboard" /></div>
+						<h2>Supply Chain &middot; Fulfillment Performance</h2>
+						<div class="image main"><img src="images/supply-chain-1-screenshot.png" alt="Supply chain fulfillment dashboard covering delivery performance and freight cost" /></div>
 						<p>Logistics and fulfillment analytics covering shipment tracking, freight costs, on-time delivery, and how carriers compare against each other. The model runs on two fact tables, roughly 5,000 shipments and 5,060 orders, joined out to four dimensions. The date table was built in Power Query across 2023 to 2025 and marked properly so time intelligence works the way it should.</p>
 						<p>Before any of that worked I had to deal with the data. Duplicate order line IDs, negative freight costs, fulfillment anomalies, and orphaned foreign keys all got handled and documented first. Then I added the columns that make the analysis possible: delivery days, an on-time flag, and freight cost per unit. Three pages came out of it, covering executive KPIs, freight cost broken down by carrier and lane, and delivery performance with drill-through.</p>
 					</section>
 
 					<section id="supply-chain-2-section">
-						<header class="major">
-							<h2>Supply Chain Analytics &middot; Salesforce Vendor Performance</h2>
-							<p>[Supply Chain]</p>
-						</header>
-						<div class="image main"><img src="images/supply-chain-2-screenshot.png" alt="Supply Chain Salesforce Power BI Dashboard" /></div>
+						<h2>Supply Chain &middot; Salesforce Vendor Performance</h2>
+						<div class="image main"><img src="images/supply-chain-2-screenshot.png" alt="Vendor performance dashboard built from Salesforce CRM exports" /></div>
 						<p>A vendor performance dashboard built from Salesforce CRM exports, pulling together four sources: PO line items, the vendor master, supply disruption cases, and products. This is the kind of build you end up doing when Salesforce is where the operational data actually lives.</p>
 						<p>The metric that matters here is the case-to-PO ratio. A vendor with a lot of disruption cases is not necessarily a problem if they are also handling a lot of volume, so measuring cases against purchase order count is what separates a genuinely risky vendor from a busy one. Getting there meant deduplicating records, flagging negative unit costs, documenting quantity anomalies, and standardizing vendor ID casing so the joins would hold.</p>
 					</section>
 
-					<!-- MANUFACTURING -->
+					<hr />
 
-					<section id="operations-analytics-section">
-						<header class="major">
-							<h2>Operations Analytics Platform</h2>
-							<p>[Manufacturing]</p>
-						</header>
-						<div class="image main"><img src="images/cfa2af18-ecdf-4ba8-b85b-c113fbe6176c.jpg" alt="" /></div>
-						<p>Operations teams usually track quality and supply chain separately, which makes it hard to see how one affects the other. I built this platform to put both in the same place. It runs on a three-schema setup in PostgreSQL: raw holds the landing zone, core holds the cleaned views, and mart holds the pre-aggregated tables that Power BI actually connects to.</p>
-						<p>I profiled the data before transforming any of it. Duplicates, nulls, mixed values, and orphaned foreign keys all got documented and triaged first, because finding those later means rebuilding. The interesting part came out of joining the two domains: late deliveries from Tier 2 suppliers lined up with higher defect rates on the production lines downstream. That connection stays invisible if you keep the data in separate reports.</p>
-					</section>
-
-					<!-- WORKFORCE -->
+					<header class="major">
+						<h1>Workforce Analytics</h1>
+						<p>Professional builds at Spring Education Group</p>
+					</header>
 
 					<section id="ta-dashboard-section">
-						<header class="major">
-							<h2>TA Conversion Report Investigation</h2>
-							<p>[Workforce]</p>
-						</header>
+						<h2>TA Conversion Report Investigation</h2>
 						<p>The Talent Acquisition dashboard started showing conversion rates dropping in a way that did not match what the recruiting team was seeing day to day. When the people doing the work tell you the number is wrong, that is usually worth listening to. I traced it back through the pipeline and found a sourcing categorization issue that was misattributing candidates and throwing off funnel metrics across the board.</p>
 						<p>Once that was corrected I rebuilt the dashboard using Power BI's Key Insights feature, which flags statistically notable weekly changes in conversion rates, volume, and funnel drop-off on its own. That changed the character of the weekly VP review. The analysis was already done by the time everyone sat down, so the meeting could be about decisions.</p>
 					</section>
 
 					<section id="turnover-scorecard-section">
-						<header class="major">
-							<h2>School Turnover Scorecard</h2>
-							<p>[Workforce]</p>
-						</header>
+						<h2>School Turnover Scorecard</h2>
 						<p>Staff turnover across the school network was being tracked in aggregate, which meant a school could be in serious trouble for months before anyone upstream noticed. I built a scorecard that broke turnover rates, tenure distributions, and exit patterns down to the individual school, then rolled them up to region and network views.</p>
-						<p>School leaders got a monthly snapshot showing where they stood against the rest of the network. HR could see which sites needed attention while there was still time to do something about it. The aggregate view had been hiding location-specific problems, and those problems needed different responses depending on the site.</p>
+						<p>School leaders got a monthly snapshot showing where they stood against the rest of the network. The bottom ten were flagged outright and a watch list caught the schools approaching concerning thresholds, so attention went where it was needed while there was still time to act. Turnover came down 16% across our schools over the period the scorecard was in use.</p>
 					</section>
 
 					<section id="bonus-allocation-section">
-						<header class="major">
-							<h2>Bonus Allocation Model</h2>
-							<p>[Workforce]</p>
-						</header>
+						<h2>Bonus Allocation Model</h2>
 						<p>Discretionary bonus allocations across a large employee population were being made without much consistent structure behind them. I built a model that applied objective criteria to the process, weighing performance metrics, tenure, and role classification, and put the results in a Power BI report managers could review and adjust inside defined parameters.</p>
 						<p>A process that had been manual and largely undocumented became auditable and repeatable. Allocation decisions held up when leadership questioned them, which was the real point. And for the first time there was visibility into how bonuses were distributing across departments and locations.</p>
+					</section>
+
+					<hr />
+
+					<header class="major">
+						<h1>Retail Analytics</h1>
+					</header>
+
+					<section id="adventureworks-section">
+						<h2>Adventure Works Sales and Customer Analytics</h2>
+						<div class="image main"><img src="images/adventureworks-screenshot.png" alt="Adventure Works retail dashboard covering revenue, profit, and returns" /></div>
+						<p>A full Power BI build on the Adventure Works retail dataset, worked through in five stages: cleaning in Power Query, building the model, writing the DAX, putting the visuals together, and finally letting Key Influencers and Decomposition Tree surface patterns on their own. I built it in stages on purpose so each layer had to hold up before the next one went on top of it.</p>
+						<p>The model is a star schema covering three years of sales alongside customer, product, territory, returns, and calendar dimensions. From there it answers the questions a retail team actually asks: where revenue and profit are coming from, which customers carry the most weight, what is getting returned, and how any of it compares to last year.</p>
+					</section>
+
+					<section id="mavenmarket-section">
+						<h2>Maven Market Retail Analytics</h2>
+						<div class="image main"><img src="images/maven-market-screenshot.png" alt="Maven Market grocery retail dashboard covering store and regional performance" /></div>
+						<p>A Power BI build on the Maven Market grocery dataset, covering two years of transactions across 1997 and 1998. The interesting wrinkle here is two separate fact tables feeding one star schema, joined out to store, product, customer, regional, returns, and calendar dimensions.</p>
+						<p>What it surfaces is the stuff a grocery chain runs on. How each store and region is performing, what customers keep coming back for, which categories are getting returned, and how any store stacks up against the rest of the chain year over year.</p>
 					</section>
 
 				</section>
