@@ -35,10 +35,49 @@
 
 					<header class="major">
 						<h1>Other Projects</h1>
-						<p>Earlier builds and standalone work where the fundamentals got worked out</p>
+						<p>Professional builds, foundational work, and the plumbing behind other projects</p>
 					</header>
 
-					<p>These are the builds that sit behind the work on the tool tabs. Some are where the fundamentals got worked out on public datasets, and some are the plumbing that other projects depend on. The habits came out of here: profile before you transform, keep the raw data intact, and document why every step exists.</p>
+					<p>Work that sits outside the tool tabs. Professional builds where the deliverable was the analysis rather than a dashboard, earlier projects where the fundamentals got worked out on public datasets, and the pipeline plumbing other projects depend on. The habits came out of here: profile before you transform, keep the raw data intact, and document why every step exists.</p>
+
+					<header class="major">
+						<h2>Workforce Analytics</h2>
+						<p>Professional builds at Spring Education Group</p>
+					</header>
+
+					<section id="ta-conversion">
+						<h3>TA Conversion Report Investigation</h3>
+						<p>The Talent Acquisition dashboard started showing conversion rates dropping in a way that did not match what the recruiting team was seeing day to day. When the people doing the work tell you the number is wrong, that is usually worth listening to. I traced it back through the pipeline and found a sourcing categorization issue that was misattributing candidates and throwing off funnel metrics across the board.</p>
+						<p>Before touching the model I asked the manager what numbers she expected and got specific recruiter and candidate names. Running the report against those confirmed the gap was real. Working up through the layers, the joins and filters were clean, which pointed at the source: recruiters were not consistently updating application status as candidates moved through the funnel. One recruiter's phone screen to first interview rate corrected from 40% to 60% once the missing updates were accounted for.</p>
+						<p>Once that was corrected I rebuilt the dashboard using Power BI's Key Insights feature, which flags statistically notable weekly changes in conversion rates, volume, and funnel drop-off on its own. That changed the character of the weekly VP review. The analysis was already done by the time everyone sat down, so the meeting could be about decisions.</p>
+						<p><strong>Tools:</strong> Dayforce, SQL Server, Power BI, Power BI Key Insights</p>
+					</section>
+
+					<hr />
+
+					<section id="turnover-scorecard">
+						<h3>School Turnover Scorecard</h3>
+						<p>Staff turnover across the school network was being tracked in aggregate, which meant a school could be in serious trouble for months before anyone upstream noticed. The EVP of Operations asked for a school-level scorecard covering all roles, with the lowest performers identified.</p>
+						<p>When the timeline compressed I assessed what could be built accurately in the window. Job class structure varied significantly by business line, and a full cross-company build under that constraint carried real risk of rate calculation errors where classification logic differed. I flagged that to the EVP and recommended anchoring on teachers and assistant teachers, the cleanest classification and the highest strategic priority, with the remaining role groups to follow in later iterations. He aligned.</p>
+						<p>The scorecard broke turnover rates, tenure distributions, and exit patterns down to the individual school, then rolled them up to region and network views. The bottom ten were flagged outright and a watch list caught schools approaching concerning thresholds.</p>
+						<p>Some schools came back above 200% turnover, which drew immediate pushback. I investigated before defending anything, and found a job title had been discontinued and renamed. The old title had dropped out of the headcount denominator, which artificially deflated the base. I documented the edge case, added a visible safeguard to the model, and reconvened with the EVP to walk through the cause before the scorecard drove any decisions. That conversation restored confidence in the data.</p>
+						<p>It became a yearly standing deliverable and a primary driver in the effort to reduce turnover, which came down 16% across our schools over the period it was in use.</p>
+						<p><strong>Tools:</strong> Dayforce, ODATA, Power Query, Power BI</p>
+					</section>
+
+					<hr />
+
+					<section id="bonus-allocation">
+						<h3>Bonus Allocation Model</h3>
+						<p>Discretionary bonus allocations across a large employee population were being made without much consistent structure behind them. I built a model that applied objective criteria to the process, weighing performance metrics, tenure, and role classification, and put the results in a Power BI report managers could review and adjust inside defined parameters.</p>
+						<p>The complexity was two source streams. Standard bonus data came from Dayforce, and a separate program for one business line sat with Finance under different rules. I combined both into a unified SQL model feeding a dual-audience report. The executive view surfaced department-level year-over-year budget, allocation, and share with dollar flags for departments exceeding forecast. The manager view drilled to the employee level.</p>
+						<p>Because Dayforce was the direct source, allocations populated as they were approved through the year, which made it a live forecasting tool. At any point in the quarter leadership could see their current position and where the full fund was tracking to land by year end. That was the question driving the quarterly reviews with the CFO and VP of HR.</p>
+						<p>The Finance source arrived late on a recurring basis. When it did, I notified stakeholders immediately and the dashboard surfaced the absence explicitly, timestamping every load so nobody was deciding on an incomplete picture without knowing it.</p>
+						<p>A process that had been manual and largely undocumented became auditable and repeatable. Allocation decisions held up when leadership questioned them, which was the real point.</p>
+						<p><strong>Tools:</strong> Dayforce, SQL, Power Query, Power BI</p>
+					</section>
+
+					<hr />
 
 					<section id="nashville">
 						<header class="major">
